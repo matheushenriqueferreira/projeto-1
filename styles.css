@@ -1,0 +1,18 @@
+:root {
+  --bg-colorWhite: #ffffff;
+  --text-colorWhite: #ffffff;
+  --text-colorBlack: #000000;
+  --bg-colorBlack: #1A1A1A;
+  --color-green: #00A82D;
+  --color-green2: #00d138;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
