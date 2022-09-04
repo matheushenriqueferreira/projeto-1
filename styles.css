@@ -198,6 +198,11 @@ main {
 #section2LinkLogin {
   font-size: 18px;
   text-decoration: underline;
+  transition: color .1s ease-in;
+}
+
+#section2LinkLogin:hover {
+  color: var(--color-green2);
 }
 
 @media screen and (max-width: 768px) {
