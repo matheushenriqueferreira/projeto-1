@@ -181,6 +181,18 @@ main {
   height: 48px;
   max-width: 407px;
   max-height: 48px;
+  background-color: var(--color-green);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--text-colorWhite);
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color .2s ease-in;
+}
+
+#section2BtnRegister:hover {
+  background-color: var(--color-green2);
 }
 
 #section2LinkLogin {
