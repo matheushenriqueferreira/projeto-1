@@ -80,6 +80,12 @@ a {
   gap: 1em;  
 }
 
+.headerArrow {
+  font-size: 8px;
+  max-width: 6px;
+  max-height: 4px;
+}
+
 #headerBtnDownload {
   width: 120px;
   height: 40px;
