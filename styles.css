@@ -83,6 +83,19 @@ a {
 #headerBtnDownload {
   width: 120px;
   height: 40px;
+  background-color: var(--bg-colorWhite);
+  border: 2px solid var(--color-green);
+  border-radius: 3px;
+  color: var(--color-green);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color, border-color .2s ease-in;
+}
+
+#headerBtnDownload:hover {
+  color: var(--color-green2);
+  border-color: var(--color-green2);
 }
 
 #menuIcon {
