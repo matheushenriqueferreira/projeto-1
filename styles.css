@@ -204,6 +204,7 @@ main {
 .section2Description {
   font-size: 26px;
   max-width: 976px;
+  line-height: 40px;
 }
 
 #section2BtnRegister {
