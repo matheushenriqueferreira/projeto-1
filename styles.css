@@ -147,6 +147,47 @@ main {
   min-height: 49px;
 }
 
+#section2 {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.section2Content {
+  display: flex;
+  text-align: center;
+  gap: 1.5em;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1220px;
+}
+
+.section2Title {
+  font-size: 56px;
+  font-weight: 700;
+  max-width: 976px;
+}
+
+.section2Description {
+  font-size: 26px;
+  max-width: 976px;
+}
+
+#section2BtnRegister {
+  width: 100%;
+  height: 48px;
+  max-width: 407px;
+  max-height: 48px;
+}
+
+#section2LinkLogin {
+  font-size: 18px;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 768px) {
   .headerContainer, .section1Content {
     justify-content: space-between;
