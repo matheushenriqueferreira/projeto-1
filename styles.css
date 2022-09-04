@@ -145,6 +145,10 @@ main {
   font-weight: bold;
   min-width: 202px;
   min-height: 49px;
+  background-color: var(--bg-colorWhite);
+  border: 2px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 #section2 {
