@@ -242,6 +242,55 @@ main {
   color: var(--color-green2);
 }
 
+#loginSection {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#loginSectionContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #dfdfdf;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin: 50px 0;
+  padding: 50px 50px;
+}
+
+#userEmail {
+  margin-top: 30px;
+}
+
+.inputStyle {
+  margin: 15px 0;
+  outline: none;
+  width: 500px;
+  height: 40px;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  padding-left: 10px;
+}
+
+.loginBtnStyle {
+  margin-top: 50px;
+  width: 500px;
+  height: 40px;
+  background-color: var(--color-green);
+  border: 0;
+  border-radius: 3px;
+  color: var(--text-colorWhite);
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color .2s ease-in;
+}
+
+.loginBtnStyle:hover {
+  background-color: var(--color-green2);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .headerContainer {
     padding: 0 40px;
