@@ -1,5 +1,6 @@
 window.onload = function() {
-  const section2 = document.querySelector(".section2Content");
+  const mainContainer = document.querySelector(".mainContainer");
+  const loginSection = document.createElement("section");
   const emailContainer = document.createElement('div');
   const passwordContainer = document.createElement('div');
   const inputEmail = document.createElement("input");
@@ -7,7 +8,9 @@ window.onload = function() {
   const btnLogin = document.createElement("button");
 
   const loginContentEvent = () => {
-    section2.innerHTML = '';
+    mainContainer.innerHTML = '';
+
+    loginSection.setAttribute('id', 'loginSection');
 
     btnLogin.setAttribute('id', 'btnLogin');
     btnLogin.setAttribute('type', 'button');
@@ -15,9 +18,10 @@ window.onload = function() {
     emailContainer.setAttribute('id', 'emailContainer');
     passwordContainer.setAttribute('id', 'passwordContainer');
 
-    section2.appendChild(emailContainer);
-    section2.appendChild(passwordContainer);
-    section2.appendChild(btnLogin);
+    mainContainer.appendChild(loginSection);
+    loginSection.appendChild(emailContainer);
+    loginSection.appendChild(passwordContainer);
+    loginSection.appendChild(btnLogin);
     
     inputEmail.setAttribute('id', 'userEmail');
     inputEmail.setAttribute('type', 'email');
