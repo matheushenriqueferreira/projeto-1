@@ -40,4 +40,27 @@ window.onload = function() {
   
   document.querySelector('#headerLinkLogin').addEventListener('click', loginContentEvent)
   document.querySelector('#section2LinkLogin').addEventListener('click', loginContentEvent)
+
+  btnLogin.addEventListener('click', () => {
+    const email = document.querySelector('#userEmail').value;
+    const password = document.querySelector('#userPassword').value;
+    
+    if(email === '' || password === '') {
+      alert('Preencha todos os campos');
+    }
+    else {
+      axios.post('https://reqres.in/api/login', {
+        "email": email, 
+        "password": password
+      })
+      .then((resp) => {
+        console.log(resp)
+      })
+      .catch((error) => {
+        alert(error);
+      })
+    }
+  })
+
+
 }
