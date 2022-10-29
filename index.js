@@ -19,7 +19,10 @@ window.onload = function() {
   const searchContainer = document.createElement("div");
   const psychonautsContainer = document.createElement("div");
   const ul = document.createElement("ul");
-  
+  const inputRangeContainer = document.createElement("div");
+  const inputRange = document.createElement("input");
+  const inputRangeValue = document.createElement("p");
+
   const storage = localStorage;
 
   const listCharacters = [];
@@ -52,6 +55,7 @@ window.onload = function() {
       resp.data.forEach(element => {
         listCharacters.push(element);
       });
+      inputRange.setAttribute('max', `${listCharacters.length}`);
       handleAddListToPage(4);//chama a função handleAddListToPage passando 4 como parametro
     })
     .catch((error) => {
@@ -81,11 +85,26 @@ window.onload = function() {
       btnSearch.setAttribute('id', 'btnSearch');
       btnSearch.setAttribute('type', 'button');
       btnSearch.innerText = 'Buscar';
+
+      inputRangeContainer.setAttribute('id', 'inputRangeContainer');
       
+      inputRange.setAttribute('id', 'inputRange');
+      inputRange.setAttribute('type', 'range');
+      inputRange.setAttribute('value', '4');
+      inputRange.setAttribute('step', '1');
+      inputRange.setAttribute('min', '4');
+
+      inputRangeValue.setAttribute('id', 'inputRangeValue');
+      inputRangeValue.innerHTML = '4';
+
+      inputRangeContainer.appendChild(inputRange)
+      inputRangeContainer.appendChild(inputRangeValue)
+
       ul.setAttribute('id', 'listContainer')
-      
+	
       searchContainer.appendChild(inputSearch);
       searchContainer.appendChild(btnSearch);
+      searchContainer.appendChild(inputRangeContainer);
       psychonautsContainer.appendChild(ul);
       
       handleGetCharacters();//chama a função que faz a requisição a API 
