@@ -9,6 +9,10 @@ window.onload = function() {
   const headerLinkLogin = document.querySelector("#headerLinkLogin");// Botão Entrar do Header
   const headerLinkHelp = document.querySelector('#headerLinkHelp');
   const headerBtnDownload = document.querySelector('#headerBtnDownload');
+  const inputSearch = document.createElement("input");
+  const btnSearch = document.createElement("button");
+  const ul = document.createElement('ul')
+  
 
   const storage = localStorage;
   const handleLogin = () => {
@@ -17,6 +21,18 @@ window.onload = function() {
       headerLinkLogin.innerHTML = 'Sair'
       headerLinkHelp.remove();
       headerBtnDownload.remove();
+      mainContainer.appendChild(inputSearch);
+      btnSearch.innerText = 'Buscar';
+      mainContainer.appendChild(btnSearch);
+      mainContainer.appendChild(ul);
+      axios.get('https://psychonauts-api.herokuapp.com/api/characters?limit=5')
+      .then((resp) => {
+        resp.data.forEach(element => {
+          const li = document.createElement('li')
+          li.innerText = element.name;
+          ul.appendChild(li);
+        });
+      })
     }
   }
 
