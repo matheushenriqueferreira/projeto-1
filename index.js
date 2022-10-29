@@ -39,6 +39,7 @@ window.onload = function() {
 
       inputSearch.setAttribute('id', 'inputSearch');
       inputSearch.setAttribute('type', 'text');
+      inputSearch.setAttribute('placeholder', 'Insira o nome');
       
       btnSearch.setAttribute('id', 'btnSearch');
       btnSearch.setAttribute('type', 'button');
