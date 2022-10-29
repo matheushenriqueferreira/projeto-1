@@ -9,11 +9,7 @@ window.onload = function() {
   const headerLinkLogin = document.querySelector("#headerLinkLogin");// Botão Entrar do Header
   const headerLinkHelp = document.querySelector('#headerLinkHelp');
   const headerBtnDownload = document.querySelector('#headerBtnDownload');
-  const inputSearch = document.createElement("input");
-  const btnSearch = document.createElement("button");
-  const ul = document.createElement('ul')
   
-
   const storage = localStorage;
   const handleLogin = () => {
     if(storage.getItem('Token')){//Verifica se o Token existe
@@ -21,15 +17,45 @@ window.onload = function() {
       headerLinkLogin.innerHTML = 'Sair'
       headerLinkHelp.remove();
       headerBtnDownload.remove();
-      mainContainer.appendChild(inputSearch);
+
+      const content = document.createElement("section");
+      content.setAttribute('id', 'content');
+      const searchContainer = document.createElement("div");
+      searchContainer.setAttribute('id', 'searchContainer');
+      const psychonautsContainer = document.createElement("div") 
+      psychonautsContainer.setAttribute('id', 'psychonautsContainer');
+      
+      mainContainer.appendChild(content);
+      content.appendChild(searchContainer);
+      content.appendChild(psychonautsContainer);
+
+      const inputSearch = document.createElement("input");
+      inputSearch.setAttribute('id', 'inputSearch');
+      inputSearch.setAttribute('type', 'text');
+      const btnSearch = document.createElement("button");
+      btnSearch.setAttribute('id', 'btnSearch');
+      btnSearch.setAttribute('type', 'button');
+      const ul = document.createElement('ul')
+      ul.setAttribute('id', 'listContainer')
+      
+      searchContainer.appendChild(inputSearch);
       btnSearch.innerText = 'Buscar';
-      mainContainer.appendChild(btnSearch);
-      mainContainer.appendChild(ul);
+      searchContainer.appendChild(btnSearch);
+      psychonautsContainer.appendChild(ul);
+      
       axios.get('https://psychonauts-api.herokuapp.com/api/characters?limit=5')
       .then((resp) => {
         resp.data.forEach(element => {
-          const li = document.createElement('li')
-          li.innerText = element.name;
+          const li = document.createElement('li');
+          li.setAttribute('class', 'listContent');
+          const img = document.createElement('img');
+          img.setAttribute('src', element.img);
+          img.setAttribute('class', 'psychonautsImg');
+          const p = document.createElement('p');
+          p.setAttribute('class', 'psychonautsName');
+          p.innerText = element.name;
+          li.appendChild(img)
+          li.appendChild(p)
           ul.appendChild(li);
         });
       })
