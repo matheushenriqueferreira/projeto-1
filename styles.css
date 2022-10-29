@@ -309,10 +309,11 @@ main {
 
 #listContainer {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+  gap: 1.5em;
   margin: 0 auto;
   padding: 20px 40px;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   max-width: 1140px;
@@ -329,12 +330,24 @@ main {
   padding: 10px;
   width: 200px;
   height: 200px;
+  transition: all .2s ease-in;
+}
+
+.listContent:hover {
+  border: 1px solid rgba(0, 168, 45, 0.5);
+  box-shadow: 2px 2px 2px 1px rgba(0, 168, 45, 0.5);
 }
 
 .psychonautsImg {
   border-radius: 3px;
   max-width: 250px;
   max-height: 150px;
+}
+
+.psychonautsName {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 768px) {
