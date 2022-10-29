@@ -132,5 +132,39 @@ window.onload = function() {
   headerLinkLogin.addEventListener('click', loginContentEvent);
   section2LinkLogin.addEventListener('click', loginContentEvent);
 
+  btnSearch.addEventListener('click', () => {
+    if(inputSearch.value !== '') {
+      axios.get(`https://psychonauts-api.herokuapp.com/api/characters?name=${inputSearch.value}`)
+      .then((resp) => {
+        if(resp.data) {
+          psychonautsContainer.innerHTML = '';
+          ul.innerHTML = '';
+          const li = document.createElement('li');
+          li.setAttribute('class', 'listContent');
+          const img = document.createElement('img');
+          img.setAttribute('src', resp.data.img);
+          img.setAttribute('class', 'psychonautsImg');
+          const p = document.createElement('p');
+          p.setAttribute('class', 'psychonautsName');
+          p.innerText = resp.data.name;
+          li.appendChild(img)
+          li.appendChild(p)
+          ul.appendChild(li);
+          psychonautsContainer.appendChild(ul);
+        }
+        else {
+          psychonautsContainer.innerHTML = '';
+          const searchError = document.createElement('p');
+          searchError.setAttribute('id', 'searchError');
+          searchError.innerText = `Não foram encontrados resultados para a busca: ${inputSearch.value}`
+          psychonautsContainer.appendChild(searchError);
+        }
+      })
+    }
+    else {
+      alert('Preencha o campo de busca');
+    }
+  })
+
   handleLogin();
 }
