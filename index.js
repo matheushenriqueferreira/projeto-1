@@ -217,5 +217,12 @@ window.onload = function() {
     handleAddListToPage(inputRange.value);
   })
 
+  
+  inputSearch.addEventListener('change', () => {
+    if(inputSearch.value === '') {//Ao fazer uma busca e limpar o campo de busca a lista é recarregada
+      handleAddListToPage(inputRange.value);
+    }
+  })
+
   handleLogin();
 }
