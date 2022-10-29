@@ -1,16 +1,27 @@
 window.onload = function() {
   const mainContainer = document.querySelector(".mainContainer");
+  
   const loginSection = document.createElement("section");
-  const loginSectionContent = document.createElement('div');
+  const loginSectionContent = document.createElement("div");
   const title = document.createElement("h1");
   const inputEmail = document.createElement("input");
   const inputPassword = document.createElement("input");
   const btnLogin = document.createElement("button");
-  const headerLinkLogin = document.querySelector("#headerLinkLogin");// Botão Entrar do Header
-  const headerLinkHelp = document.querySelector('#headerLinkHelp');
-  const headerBtnDownload = document.querySelector('#headerBtnDownload');
+  
+  const headerLinkLogin = document.querySelector("#headerLinkLogin");
+  const section2LinkLogin = document.querySelector("#section2LinkLogin");
+  const headerLinkHelp = document.querySelector("#headerLinkHelp");
+  const headerBtnDownload = document.querySelector("#headerBtnDownload");
+  
+  const btnSearch = document.createElement("button");
+  const inputSearch = document.createElement("input");
+  const content = document.createElement("section");
+  const searchContainer = document.createElement("div");
+  const psychonautsContainer = document.createElement("div");
+  const ul = document.createElement("ul");
   
   const storage = localStorage;
+  
   const handleLogin = () => {
     if(storage.getItem('Token')){//Verifica se o Token existe
       mainContainer.innerHTML = '';
@@ -18,28 +29,24 @@ window.onload = function() {
       headerLinkHelp.remove();
       headerBtnDownload.remove();
 
-      const content = document.createElement("section");
       content.setAttribute('id', 'content');
-      const searchContainer = document.createElement("div");
       searchContainer.setAttribute('id', 'searchContainer');
-      const psychonautsContainer = document.createElement("div") 
       psychonautsContainer.setAttribute('id', 'psychonautsContainer');
       
       mainContainer.appendChild(content);
       content.appendChild(searchContainer);
       content.appendChild(psychonautsContainer);
 
-      const inputSearch = document.createElement("input");
       inputSearch.setAttribute('id', 'inputSearch');
       inputSearch.setAttribute('type', 'text');
-      const btnSearch = document.createElement("button");
+      
       btnSearch.setAttribute('id', 'btnSearch');
       btnSearch.setAttribute('type', 'button');
-      const ul = document.createElement('ul')
+      btnSearch.innerText = 'Buscar';
+      
       ul.setAttribute('id', 'listContainer')
       
       searchContainer.appendChild(inputSearch);
-      btnSearch.innerText = 'Buscar';
       searchContainer.appendChild(btnSearch);
       psychonautsContainer.appendChild(ul);
       
@@ -99,9 +106,6 @@ window.onload = function() {
     }
   }
   
-  headerLinkLogin.addEventListener('click', loginContentEvent)
-  document.querySelector('#section2LinkLogin').addEventListener('click', loginContentEvent)
-  
   btnLogin.addEventListener('click', () => {
     const email = document.querySelector('#userEmail').value;
     const password = document.querySelector('#userPassword').value;
@@ -123,6 +127,9 @@ window.onload = function() {
       })
     }
   })
+
+  headerLinkLogin.addEventListener('click', loginContentEvent);
+  section2LinkLogin.addEventListener('click', loginContentEvent);
 
   handleLogin();
 }
