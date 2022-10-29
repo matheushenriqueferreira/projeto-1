@@ -196,13 +196,14 @@ window.onload = function() {
           psychonautsContainer.appendChild(ul);
         }
         else {
-          psychonautsContainer.innerHTML = '';
+          ul.innerHTML = '';
           const searchError = document.createElement('p');
           searchError.setAttribute('id', 'searchError');
           searchError.innerText = `Não foram encontrados resultados para a busca: ${inputSearch.value}`
-          psychonautsContainer.appendChild(searchError);
+          ul.appendChild(searchError);
         }
       })
+      .catch((error) => alert(error))
     }
     else {
       alert('Preencha o campo de busca');
