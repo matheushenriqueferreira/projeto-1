@@ -21,6 +21,43 @@ window.onload = function() {
   const ul = document.createElement("ul");
   
   const storage = localStorage;
+
+  const listCharacters = [];
+
+  //Adiciona os itens da listCharacters a ul;
+  const handleAddListToPage = (limit) => {
+    ul.innerHTML = '';
+    for(let i = 0; i < limit; i++) {
+      const li = document.createElement('li');
+      li.setAttribute('class', 'listContent');
+      
+      const img = document.createElement('img');
+      img.setAttribute('src', listCharacters[i].img);
+      img.setAttribute('class', 'psychonautsImg');
+      
+      const p = document.createElement('p');
+      p.setAttribute('class', 'psychonautsName');
+      p.innerText = listCharacters[i].name;
+      
+      li.appendChild(img);
+      li.appendChild(p);
+      ul.appendChild(li);
+    }
+  }
+
+  //Faz a requisição da lista de personagens e adiciona os itens a listCharacters
+  const handleGetCharacters = () => {
+    axios.get(`https://psychonauts-api.herokuapp.com/api/characters?limit=20`)
+    .then((resp) => {
+      resp.data.forEach(element => {
+        listCharacters.push(element);
+      });
+      handleAddListToPage(4);//chama a função handleAddListToPage passando 4 como parametro
+    })
+    .catch((error) => {
+      alert(error);
+    })
+  }
   
   const handleLogin = () => {
     if(storage.getItem('Token')){//Verifica se o Token existe
@@ -51,22 +88,7 @@ window.onload = function() {
       searchContainer.appendChild(btnSearch);
       psychonautsContainer.appendChild(ul);
       
-      axios.get('https://psychonauts-api.herokuapp.com/api/characters?limit=5')
-      .then((resp) => {
-        resp.data.forEach(element => {
-          const li = document.createElement('li');
-          li.setAttribute('class', 'listContent');
-          const img = document.createElement('img');
-          img.setAttribute('src', element.img);
-          img.setAttribute('class', 'psychonautsImg');
-          const p = document.createElement('p');
-          p.setAttribute('class', 'psychonautsName');
-          p.innerText = element.name;
-          li.appendChild(img)
-          li.appendChild(p)
-          ul.appendChild(li);
-        });
-      })
+      handleGetCharacters();//chama a função que faz a requisição a API 
     }
   }
 
@@ -106,6 +128,8 @@ window.onload = function() {
       document.location.reload();
     }
   }
+
+  
   
   btnLogin.addEventListener('click', () => {
     const email = document.querySelector('#userEmail').value;
