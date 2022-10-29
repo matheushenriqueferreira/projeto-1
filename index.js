@@ -209,5 +209,11 @@ window.onload = function() {
     }
   })
 
+  //Altera a quantidade de itens exibidos na página
+  inputRange.addEventListener('change', () => {
+    inputRangeValue.innerHTML = inputRange.value;
+    handleAddListToPage(inputRange.value);
+  })
+
   handleLogin();
 }
