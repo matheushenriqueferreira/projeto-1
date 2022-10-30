@@ -7,7 +7,7 @@
 ## :white_check_mark: Etapas do Projeto
 
 - [x] PROJETO 1 - HTML e CSS: Selecionar um website disponível na Web e replicar uma parte do seu layout de forma responsiva utilizando HTML e CSS.
-- [ ] PROJETO 2 - JavaScript e AJAX: Selecionar e utilizar uma API JSON aberta, implementar as funcionalidades de login, busca de conteúdo e armazenamento de informações de login.
+- [ ] PROJETO 2 - JavaScript e AJAX: Selecionar e utilizar uma API JSON aberta, implementar as funcionalidades de login, busca de conteúdo e armazenamento de informações de login. Obs: Para testes, ao realizar Login, verificar e-mails válidos da API Reqres.in e preencher o campo password com mais de 3 caracteres.
 - [ ] PROJETO 3 - Express.js:
 
 ## Tabela de Conteúdo
