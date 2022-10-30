@@ -69,6 +69,7 @@ window.onload = function() {
     if(storage.getItem('Token')){//Verifica se o Token existe
       mainContainer.innerHTML = '';
       headerLinkLogin.innerHTML = 'Sair'
+      headerContainerLogin.innerHTML = 'Sair'
       headerLinkHelp.remove();
       headerBtnDownload.remove();
 
@@ -242,6 +243,8 @@ window.onload = function() {
         menuIcon.title = 'nav-open';
       break;
     }
+
+    headerContainerLogin.addEventListener('click', loginContentEvent);
   
   })
 
