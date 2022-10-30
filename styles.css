@@ -465,6 +465,19 @@ main {
   #btnSearch {
     height: 30px;
   }
+
+  .listContent {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .psychonautsImg {
+    max-height: 100px;
+  }
+
+  .psychonautsName {
+    font-size: 10px;
+  }
   
 }
 
