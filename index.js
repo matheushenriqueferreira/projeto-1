@@ -22,6 +22,8 @@ window.onload = function() {
   const inputRangeContainer = document.createElement("div");
   const inputRange = document.createElement("input");
   const inputRangeValue = document.createElement("p");
+  const menuIcon = document.querySelector("#menuIcon");
+  const headerContainerLogin = document.querySelector("#headerContainerLogin");
 
   const storage = localStorage;
 
@@ -222,6 +224,25 @@ window.onload = function() {
     if(inputSearch.value === '') {//Ao fazer uma busca e limpar o campo de busca a lista é recarregada
       handleAddListToPage(inputRange.value);
     }
+  })
+
+  menuIcon.addEventListener('click', () => {
+    const logo = document.querySelector('#logo');
+    switch(menuIcon.title) {
+      case 'nav-open':
+        logo.style.display = 'none';
+        headerContainerLogin.style.display = 'inline';
+        menuIcon.src = './assets/nav-close.svg';
+        menuIcon.title = 'nav-close';
+      break;
+      case 'nav-close':
+        logo.style.display = 'inline';
+        headerContainerLogin.style.display = 'none';
+        menuIcon.src = './assets/nav-open.svg';
+        menuIcon.title = 'nav-open';
+      break;
+    }
+  
   })
 
   handleLogin();
