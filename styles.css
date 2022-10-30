@@ -517,10 +517,26 @@ main {
   .headerContainer, .section1Content, .section2Content {
     padding: 0 40px;
   }
+
+  #logo {
+    display: inline;
+  }
+
+  #headerContainerLogin {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1221px) {
   .headerContainer, .section1Content, .section2Content {
     margin: 0 auto;
+  }
+
+  #logo {
+    display: inline;
+  }
+
+  #headerContainerLogin {
+    display: none;
   }
 }
