@@ -52,6 +52,7 @@ a {
 #logo {
   max-width: 177px;
   max-height: 40px;
+  cursor: pointer;
 }
 
 #headerContainerLogin {
