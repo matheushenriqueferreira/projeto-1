@@ -54,6 +54,14 @@ a {
   max-height: 40px;
 }
 
+#headerContainerLogin {
+  display: none;
+}
+
+#headerContainerLogin:hover {
+  color: var(--color-green);
+}
+
 #headerLinkHelp, #headerLinkLogin, #headerBtnDownload {
   display: block;
 }
