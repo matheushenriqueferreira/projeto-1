@@ -455,6 +455,16 @@ main {
     height: 30px;
     font-size: 12px;
   }
+
+  #searchContainer {
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+  }
+
+  #btnSearch {
+    height: 30px;
+  }
   
 }
 
