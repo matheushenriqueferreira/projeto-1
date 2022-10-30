@@ -24,6 +24,7 @@ window.onload = function() {
   const inputRangeValue = document.createElement("p");
   const menuIcon = document.querySelector("#menuIcon");
   const headerContainerLogin = document.querySelector("#headerContainerLogin");
+  const logo = document.querySelector("#logo");
 
   const storage = localStorage;
 
@@ -243,10 +244,13 @@ window.onload = function() {
         menuIcon.title = 'nav-open';
       break;
     }
-
-    headerContainerLogin.addEventListener('click', loginContentEvent);
-  
   })
+
+  headerContainerLogin.addEventListener('click', loginContentEvent);
+  logo.addEventListener('click', () => {
+    document.location.reload();//Ao clicar no logo Evernote é feito reload na página
+  })
+
 
   handleLogin();
 }
