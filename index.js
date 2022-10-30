@@ -161,6 +161,9 @@ window.onload = function() {
     if(email === '' || password === '') {
       alert('Preencha todos os campos');
     }
+    else if(String(password).length < 3) {
+      alert("Senha inválida, menos de 3 caracteres");
+    }
     else {
       axios.post('https://reqres.in/api/login', {
         "email": email,
@@ -171,7 +174,7 @@ window.onload = function() {
         handleLogin();
       })
       .catch((error) => {
-        alert(error);
+        alert(`${error}\nProvavelmente o email informado não consta na base de dados.`);
       })
     }
   })
