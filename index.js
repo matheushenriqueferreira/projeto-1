@@ -5,7 +5,6 @@ window.onload = function() {
   const loginSectionContent = document.createElement("div");
   const title = document.createElement("h1");
   const inputEmail = document.createElement("input");
-  const inputPassword = document.createElement("input");
   const btnLogin = document.createElement("button");
   
   const headerLinkLogin = document.querySelector("#headerLinkLogin");
@@ -131,10 +130,6 @@ window.onload = function() {
       inputEmail.setAttribute('type', 'email');
       inputEmail.setAttribute('placeholder', 'Insira o seu e-mail');
       inputEmail.setAttribute('class', 'inputStyle');
-      inputPassword.setAttribute('id', 'userPassword');
-      inputPassword.setAttribute('type', 'password');
-      inputPassword.setAttribute('placeholder', 'Insira a sua senha');
-      inputPassword.setAttribute('class', 'inputStyle');
       btnLogin.setAttribute('id', 'btnLogin');
       btnLogin.setAttribute('type', 'button');
       btnLogin.setAttribute('class', 'loginBtnStyle');
@@ -142,7 +137,6 @@ window.onload = function() {
       
       loginSectionContent.appendChild(title);
       loginSectionContent.appendChild(inputEmail);
-      loginSectionContent.appendChild(inputPassword);
       loginSectionContent.appendChild(btnLogin);
     }
     else {//Remove o item do LocalStorage e faz o reload da página
@@ -155,15 +149,13 @@ window.onload = function() {
   
   btnLogin.addEventListener('click', () => {
     const email = document.querySelector('#userEmail').value;
-    const password = document.querySelector('#userPassword').value;
     
     if(email === '' || password === '') {
       alert('Preencha todos os campos');
     }
     else {
       axios.post('https://reqres.in/api/login', {
-        "email": email, 
-        "password": password
+        "email": email
       })
       .then((resp) => {
         storage.setItem('Token', resp.data.token);
