@@ -305,6 +305,11 @@ main {
   cursor: pointer;
 }
 
+#errorMsg {
+  font-size: 11px;
+  color: red;
+}
+
 #searchContainer {
   display: flex;
   justify-content: center;
