@@ -25,6 +25,8 @@ window.onload = function() {
   const menuIcon = document.querySelector("#menuIcon");
   const headerContainerLogin = document.querySelector("#headerContainerLogin");
   const logo = document.querySelector("#logo");
+  const errorMsg = document.createElement("p");
+  errorMsg.setAttribute("id", 'errorMsg');
 
   const storage = localStorage;
 
@@ -62,7 +64,9 @@ window.onload = function() {
       handleAddListToPage(4);//chama a função handleAddListToPage passando 4 como parametro
     })
     .catch((error) => {
-      alert(error);
+      ul.innerHTML = ''
+      errorMsg.innerHTML = error;
+      ul.appendChild(errorMsg);
     })
   }
   
@@ -145,6 +149,7 @@ window.onload = function() {
       loginSectionContent.appendChild(inputEmail);
       loginSectionContent.appendChild(inputPassword);
       loginSectionContent.appendChild(btnLogin);
+      loginSectionContent.appendChild(errorMsg);
     }
     else {//Remove o item do LocalStorage e faz o reload da página
       storage.removeItem('Token');
@@ -152,17 +157,15 @@ window.onload = function() {
     }
   }
 
-  
-  
   btnLogin.addEventListener('click', () => {
     const email = document.querySelector('#userEmail').value;
     const password = document.querySelector('#userPassword').value;
     
     if(email === '' || password === '') {
-      alert('Preencha todos os campos');
+      errorMsg.innerHTML = "Preencha todos os campos!";
     }
     else if(String(password).length < 3) {
-      alert("Senha inválida, menos de 3 caracteres");
+      errorMsg.innerHTML = "Senha inválida, menos de 3 caracteres";
     }
     else {
       axios.post('https://reqres.in/api/login', {
@@ -171,10 +174,11 @@ window.onload = function() {
       })
       .then((resp) => {
         storage.setItem('Token', resp.data.token);
+        errorMsg.innerHTML = '';
         handleLogin();
       })
       .catch((error) => {
-        alert(`${error}\nProvavelmente o email informado não consta na base de dados.`);
+        errorMsg.innerHTML = `${error}: Provavelmente o email informado não consta na base de dados.`;
       })
     }
   })
@@ -183,6 +187,9 @@ window.onload = function() {
   section2LinkLogin.addEventListener('click', loginContentEvent);
 
   btnSearch.addEventListener('click', () => {
+    const searchError = document.createElement('p');
+    searchError.setAttribute('id', 'searchError');
+    
     if(inputSearch.value !== '') {
       axios.get(`https://psychonauts-api.herokuapp.com/api/characters?name=${inputSearch.value}`)
       .then((resp) => {
@@ -204,16 +211,20 @@ window.onload = function() {
         }
         else {
           ul.innerHTML = '';
-          const searchError = document.createElement('p');
-          searchError.setAttribute('id', 'searchError');
           searchError.innerText = `Não foram encontrados resultados para a busca: ${inputSearch.value}`
           ul.appendChild(searchError);
         }
       })
-      .catch((error) => alert(error))
+      .catch((error) => {
+        ul.innerHTML = '';
+        searchError.innerHTML = error;
+        ul.appendChild(searchError);
+      })
     }
     else {
-      alert('Preencha o campo de busca');
+      ul.innerHTML = '';
+      searchError.innerHTML = 'Preencha o campo de busca';
+      ul.appendChild(searchError);
     }
   })
 
