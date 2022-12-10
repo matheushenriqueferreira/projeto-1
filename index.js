@@ -1,12 +1,17 @@
 window.onload = function() {
   const mainContainer = document.querySelector(".mainContainer");
   
-  const loginSection = document.createElement("section");
-  const loginSectionContent = document.createElement("div");
-  const title = document.createElement("h1");
+  const registrationAndLoginSection = document.createElement("section");
+  const registrationAndLoginSectionContent = document.createElement("div");
+  const logo2= document.createElement("img");
+  const registrationAndLoginForm = document.createElement("form");
   const inputEmail = document.createElement("input");
   const inputPassword = document.createElement("input");
-  const btnLogin = document.createElement("button");
+  const btnRegistrationAndLogin = document.createElement("input");
+  const hr = document.createElement("hr");
+  const registrationAndLoginLinkContainer = document.createElement("div");
+  const registrationAndLoginLinkText = document.createElement("p");
+  const registrationAndLoginLink = document.createElement("a");
   
   const headerLinkLogin = document.querySelector("#headerLinkLogin");
   const section2LinkLogin = document.querySelector("#section2LinkLogin");
@@ -27,6 +32,8 @@ window.onload = function() {
   const logo = document.querySelector("#logo");
   const errorMsg = document.createElement("p");
   errorMsg.setAttribute("id", 'errorMsg');
+
+  const section2BtnRegister = document.querySelector('#section2BtnRegister');
 
   const storage = localStorage;
 
@@ -119,37 +126,68 @@ window.onload = function() {
     }
   }
 
-  const loginContentEvent = () => {
+  //Usado para criar a pagina de cadastro e de login
+  const createRegistrationAndLoginPage = (page) => {
     if(headerLinkLogin.innerHTML === 'Entrar') {
       mainContainer.innerHTML = '';
+      errorMsg.innerHTML = '';
+      inputEmail.value = '';
+      inputPassword.value = '';
       
-      loginSection.setAttribute('id', 'loginSection');
+      registrationAndLoginSection.setAttribute('id', 'registrationAndLoginSection');
       
-      loginSectionContent.setAttribute('id', 'loginSectionContent');
+      registrationAndLoginSectionContent.setAttribute('id', 'registrationAndLoginSectionContent');
       
-      mainContainer.appendChild(loginSection);
-      loginSection.appendChild(loginSectionContent);
+      mainContainer.appendChild(registrationAndLoginSection);
+      registrationAndLoginSection.appendChild(registrationAndLoginSectionContent);
       
-      title.setAttribute('class', 'section2Title');
-      title.innerText = 'Login';
+      logo2.setAttribute('id', 'logo2');
+      logo2.setAttribute('src', './assets/logo2.svg');
       inputEmail.setAttribute('id', 'userEmail');
+      inputEmail.setAttribute('class', 'inputStyle');
       inputEmail.setAttribute('type', 'email');
       inputEmail.setAttribute('placeholder', 'Insira o seu e-mail');
-      inputEmail.setAttribute('class', 'inputStyle');
+      inputEmail.setAttribute('autofocus', true);
+      inputEmail.setAttribute('required', '');
       inputPassword.setAttribute('id', 'userPassword');
+      inputPassword.setAttribute('class', 'inputStyle');
       inputPassword.setAttribute('type', 'password');
       inputPassword.setAttribute('placeholder', 'Insira a sua senha');
-      inputPassword.setAttribute('class', 'inputStyle');
-      btnLogin.setAttribute('id', 'btnLogin');
-      btnLogin.setAttribute('type', 'button');
-      btnLogin.setAttribute('class', 'loginBtnStyle');
-      btnLogin.innerText = 'Entrar'
+      inputPassword.setAttribute('required', '');
+      btnRegistrationAndLogin.setAttribute('id', 'btnRegistrationAndLogin');
+      btnRegistrationAndLogin.setAttribute('type', 'submit');
+      btnRegistrationAndLogin.setAttribute('class', 'btnRegistrationAndLoginStyle');
+
+      registrationAndLoginForm.setAttribute('id', 'registrationAndLoginForm');
+      registrationAndLoginForm.appendChild(inputEmail);
+      registrationAndLoginForm.appendChild(inputPassword);
+      registrationAndLoginForm.appendChild(btnRegistrationAndLogin);
+
+      registrationAndLoginLinkContainer.setAttribute('class', 'registrationAndLoginLinkContainer');
+      registrationAndLoginLinkText.setAttribute('id', 'registrationAndLoginLinkText');
+      registrationAndLoginLink.setAttribute('id', 'registrationAndLoginLink');
+      registrationAndLoginLinkContainer.appendChild(registrationAndLoginLinkText);
+      registrationAndLoginLinkContainer.appendChild(registrationAndLoginLink);
+
+      //Altera o conteúdo de acordo com a página
+      switch(page) {
+        case 'Registration':
+          btnRegistrationAndLogin.value = 'Cadastrar';
+          registrationAndLoginLinkText.innerHTML = 'Já possui uma conta?';
+          registrationAndLoginLink.innerHTML = 'Entrar';
+        break;
+        case 'Login':
+          btnRegistrationAndLogin.value = 'Entrar';
+          registrationAndLoginLinkText.innerHTML = 'Não possui uma conta?';
+          registrationAndLoginLink.innerHTML = 'Criar conta';
+        break;
+      }
       
-      loginSectionContent.appendChild(title);
-      loginSectionContent.appendChild(inputEmail);
-      loginSectionContent.appendChild(inputPassword);
-      loginSectionContent.appendChild(btnLogin);
-      loginSectionContent.appendChild(errorMsg);
+      registrationAndLoginSectionContent.appendChild(logo2);
+      registrationAndLoginSectionContent.appendChild(registrationAndLoginForm);
+      registrationAndLoginSectionContent.appendChild(errorMsg);
+      registrationAndLoginSectionContent.appendChild(hr);
+      registrationAndLoginSectionContent.appendChild(registrationAndLoginLinkContainer);
     }
     else {//Remove o item do LocalStorage e faz o reload da página
       storage.removeItem('Token');
@@ -157,10 +195,11 @@ window.onload = function() {
     }
   }
 
-  btnLogin.addEventListener('click', () => {
+  //Evento ao clicar no btn cadastrar ou Entrar
+  btnRegistrationAndLogin.addEventListener('submit', () => {
     const email = document.querySelector('#userEmail').value;
     const password = document.querySelector('#userPassword').value;
-    
+  
     if(email === '' || password === '') {
       errorMsg.innerHTML = "Preencha todos os campos!";
     }
@@ -183,8 +222,8 @@ window.onload = function() {
     }
   })
 
-  headerLinkLogin.addEventListener('click', loginContentEvent);
-  section2LinkLogin.addEventListener('click', loginContentEvent);
+  headerLinkLogin.addEventListener('click', () => createRegistrationAndLoginPage('Login'));
+  section2LinkLogin.addEventListener('click', () => createRegistrationAndLoginPage('Login'));
 
   btnSearch.addEventListener('click', () => {
     const searchError = document.createElement('p');
@@ -260,11 +299,26 @@ window.onload = function() {
     }
   })
 
-  headerContainerLogin.addEventListener('click', loginContentEvent);
+  headerContainerLogin.addEventListener('click', () => createRegistrationAndLoginPage('Login'));
+  
   logo.addEventListener('click', () => {
     document.location.reload();//Ao clicar no logo Evernote é feito reload na página
   })
 
+  section2BtnRegister.addEventListener('click', () => createRegistrationAndLoginPage('Registration'));
+
+  //Lida com o click do btnRegistrationAndLogin na página de Registro e de login
+  registrationAndLoginLink.addEventListener('click', () => {
+    const value = btnRegistrationAndLogin.value;
+    switch(value) {
+      case 'Entrar':
+        createRegistrationAndLoginPage('Registration');
+      break;
+      case 'Cadastrar':
+        createRegistrationAndLoginPage('Login');
+      break;
+    }
+  })
 
   handleLogin();
 }
