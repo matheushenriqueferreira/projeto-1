@@ -1,0 +1,24 @@
+{
+  "name": "projeto-web",
+  "version": "1.0.0",
+  "description": "Projeto prático da disciplina de Programação web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/nodemon/bin/nodemon.js index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheushenriqueferreira/projeto-web.git"
+  },
+  "author": "Matheus Henrique Ferreira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matheushenriqueferreira/projeto-web/issues"
+  },
+  "homepage": "https://github.com/matheushenriqueferreira/projeto-web#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  }
+}
