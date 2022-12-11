@@ -1,7 +1,6 @@
-let http = require('http');
-let path = require('path');
-let express = require('express');
-let app = express();
+import express from "express";
+
+const app = express();
 
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended: false}));

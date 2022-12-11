@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Projeto prático da disciplina de Programação web",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node node_modules/nodemon/bin/nodemon.js index.js"
