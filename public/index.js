@@ -76,6 +76,17 @@ window.onload = function() {
       ul.appendChild(errorMsg);
     })
   }
+
+  const handleRegistration = (content) => {
+    axios.post('http://localhost:3000/registration', content)
+    .then(() => {
+      errorMsg.innerHTML = '';
+      createRegistrationAndLoginPage('Login');
+    })
+    .catch((error) => {
+      errorMsg.innerHTML = error;
+    })
+  }
   
   const handleLogin = () => {
     if(storage.getItem('Token')){//Verifica se o Token existe
@@ -207,18 +218,14 @@ window.onload = function() {
       errorMsg.innerHTML = "Senha inválida, menos de 3 caracteres";
     }
     else {
-      axios.post('https://reqres.in/api/login', {
-        "email": email,
-        "password": password
-      })
-      .then((resp) => {
-        storage.setItem('Token', resp.data.token);
-        errorMsg.innerHTML = '';
-        handleLogin();
-      })
-      .catch((error) => {
-        errorMsg.innerHTML = `${error}: Provavelmente o email informado não consta na base de dados.`;
-      })
+      const btnValue = btnRegistrationAndLogin.value;
+
+      const content = {
+        userEmail: email,
+        userPassword: password
+      }
+
+      btnValue === 'Cadastrar' ? handleRegistration(content) : handleLogin();
     }
   })
 
