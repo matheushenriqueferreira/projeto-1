@@ -3,13 +3,14 @@ let path = require('path');
 let express = require('express');
 let app = express();
 
-app.set('views', path.join(__dirname, 'view'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('./public'));
 app.use(express.urlencoded({extended: false}));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/view/index.html'));
-});
-
+app.use((req, res) => {
+  res.status(404).json({ 
+    message: 'Conteúdo não encontrado',
+    path: req.path
+  });
+})
 
 app.listen(3000);

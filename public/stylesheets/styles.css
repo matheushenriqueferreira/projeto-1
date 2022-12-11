@@ -283,7 +283,7 @@ main {
   max-height: 100px;
 }
 
-#registrationAndLoginForm {
+#registrationAndLoginDiv {
   margin-top: 40px;
   width: 100%;
   display: flex;
@@ -524,7 +524,7 @@ main {
     gap: 1.5em;
   }
 
-  #registrationAndLoginForm {
+  #registrationAndLoginDiv {
     margin-top: 20px;
   }
 

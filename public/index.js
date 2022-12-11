@@ -4,7 +4,7 @@ window.onload = function() {
   const registrationAndLoginSection = document.createElement("section");
   const registrationAndLoginSectionContent = document.createElement("div");
   const logo2= document.createElement("img");
-  const registrationAndLoginForm = document.createElement("form");
+  const registrationAndLoginDiv = document.createElement("div");
   const inputEmail = document.createElement("input");
   const inputPassword = document.createElement("input");
   const btnRegistrationAndLogin = document.createElement("input");
@@ -155,15 +155,13 @@ window.onload = function() {
       inputPassword.setAttribute('placeholder', 'Insira a sua senha');
       inputPassword.setAttribute('required', '');
       btnRegistrationAndLogin.setAttribute('id', 'btnRegistrationAndLogin');
-      btnRegistrationAndLogin.setAttribute('type', 'submit');
+      btnRegistrationAndLogin.setAttribute('type', 'button');
       btnRegistrationAndLogin.setAttribute('class', 'btnRegistrationAndLoginStyle');
 
-      registrationAndLoginForm.setAttribute('id', 'registrationAndLoginForm');
-      registrationAndLoginForm.setAttribute('action', 'index.html');
-      registrationAndLoginForm.setAttribute('method', 'POST');
-      registrationAndLoginForm.appendChild(inputEmail);
-      registrationAndLoginForm.appendChild(inputPassword);
-      registrationAndLoginForm.appendChild(btnRegistrationAndLogin);
+      registrationAndLoginDiv.setAttribute('id', 'registrationAndLoginDiv');
+      registrationAndLoginDiv.appendChild(inputEmail);
+      registrationAndLoginDiv.appendChild(inputPassword);
+      registrationAndLoginDiv.appendChild(btnRegistrationAndLogin);
 
       registrationAndLoginLinkContainer.setAttribute('class', 'registrationAndLoginLinkContainer');
       registrationAndLoginLinkText.setAttribute('id', 'registrationAndLoginLinkText');
@@ -186,7 +184,7 @@ window.onload = function() {
       }
       
       registrationAndLoginSectionContent.appendChild(logo2);
-      registrationAndLoginSectionContent.appendChild(registrationAndLoginForm);
+      registrationAndLoginSectionContent.appendChild(registrationAndLoginDiv);
       registrationAndLoginSectionContent.appendChild(errorMsg);
       registrationAndLoginSectionContent.appendChild(hr);
       registrationAndLoginSectionContent.appendChild(registrationAndLoginLinkContainer);
@@ -198,7 +196,7 @@ window.onload = function() {
   }
 
   //Evento ao clicar no btn cadastrar ou Entrar
-  btnRegistrationAndLogin.addEventListener('submit', () => {
+  btnRegistrationAndLogin.addEventListener('click', () => {
     const email = document.querySelector('#userEmail').value;
     const password = document.querySelector('#userPassword').value;
   
