@@ -322,6 +322,11 @@ main {
   cursor: pointer;
 }
 
+#successfulMsg {
+  font-size: 11px;
+  color: var(--color-green2);
+}
+
 #errorMsg {
   font-size: 11px;
   color: red;

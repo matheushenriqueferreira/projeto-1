@@ -32,6 +32,8 @@ window.onload = function() {
   const logo = document.querySelector("#logo");
   const errorMsg = document.createElement("p");
   errorMsg.setAttribute("id", 'errorMsg');
+  const successfulMsg = document.createElement('p');
+  successfulMsg.setAttribute("id", 'successfulMsg');
 
   const section2BtnRegister = document.querySelector('#section2BtnRegister');
 
@@ -77,11 +79,11 @@ window.onload = function() {
     })
   }
 
-  const handleRegistration = (content) => {
+  const handleRegistration = async (content) => {
     axios.post('http://localhost:3000/registration', content)
-    .then(() => {
+    .then((resp) => {
       errorMsg.innerHTML = '';
-      createRegistrationAndLoginPage('Login');
+      successfulMsg.innerHTML = resp.data.message;
     })
     .catch((error) => {
       errorMsg.innerHTML = error;
@@ -144,6 +146,7 @@ window.onload = function() {
       errorMsg.innerHTML = '';
       inputEmail.value = '';
       inputPassword.value = '';
+      successfulMsg.innerHTML = '';
       
       registrationAndLoginSection.setAttribute('id', 'registrationAndLoginSection');
       
@@ -196,6 +199,7 @@ window.onload = function() {
       
       registrationAndLoginSectionContent.appendChild(logo2);
       registrationAndLoginSectionContent.appendChild(registrationAndLoginDiv);
+      registrationAndLoginSectionContent.appendChild(successfulMsg);
       registrationAndLoginSectionContent.appendChild(errorMsg);
       registrationAndLoginSectionContent.appendChild(hr);
       registrationAndLoginSectionContent.appendChild(registrationAndLoginLinkContainer);
@@ -208,6 +212,8 @@ window.onload = function() {
 
   //Evento ao clicar no btn cadastrar ou Entrar
   btnRegistrationAndLogin.addEventListener('click', () => {
+    errorMsg.innerHTML = '';
+    successfulMsg.innerHTML = '';
     const email = document.querySelector('#userEmail').value;
     const password = document.querySelector('#userPassword').value;
   
@@ -219,7 +225,6 @@ window.onload = function() {
     }
     else {
       const btnValue = btnRegistrationAndLogin.value;
-
       const content = {
         userEmail: email,
         userPassword: password
