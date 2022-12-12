@@ -79,6 +79,8 @@ window.onload = function() {
     })
   }
 
+  //
+  // Responsável pela realização do Cadastro de usuário
   const handleRegistration = async (content) => {
     axios.post('http://localhost:3000/registration', content)
     .then((resp) => {
@@ -89,9 +91,11 @@ window.onload = function() {
       errorMsg.innerHTML = error;
     })
   }
-  
-  const handleLogin = () => {
-    if(storage.getItem('Token')){//Verifica se o Token existe
+
+  //
+  // Página que o usuário acessa depois de logado
+  const createHomePage = () => {
+    if(storage.getItem('Token')){//Verifica se o toke existe
       mainContainer.innerHTML = '';
       headerLinkLogin.innerHTML = 'Sair'
       headerContainerLogin.innerHTML = 'Sair'
@@ -129,14 +133,28 @@ window.onload = function() {
       inputRangeContainer.appendChild(inputRangeValue)
 
       ul.setAttribute('id', 'listContainer')
-	
+
       searchContainer.appendChild(inputSearch);
       searchContainer.appendChild(btnSearch);
       searchContainer.appendChild(inputRangeContainer);
       psychonautsContainer.appendChild(ul);
-      
-      handleGetCharacters();//chama a função que faz a requisição a API 
     }
+    //handleGetCharacters();//chama a função que faz a requisição a API 
+  }
+
+  //
+  // Responsável pela realização do Login do usuário
+  const handleLogin = (content) => {
+    axios.post('http://localhost:3000/login', content)
+    .then((resp) => {
+      storage.setItem('Token', resp.data.token);
+      errorMsg.innerHTML = '';
+      successfulMsg.innerHTML = resp.data.message;
+      createHomePage();
+    })
+    .catch((error) => {
+      errorMsg.innerHTML = error;
+    });
   }
 
   //Usado para criar a pagina de cadastro e de login
@@ -230,7 +248,7 @@ window.onload = function() {
         userPassword: password
       }
 
-      btnValue === 'Cadastrar' ? handleRegistration(content) : handleLogin();
+      btnValue === 'Cadastrar' ? handleRegistration(content) : handleLogin(content);
     }
   })
 
@@ -332,5 +350,5 @@ window.onload = function() {
     }
   })
 
-  handleLogin();
+  createHomePage();
 }

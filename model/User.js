@@ -28,11 +28,7 @@ export class User {
 
     if(userExists) {
       conn.close();
-      const result = {
-        status: 422,
-        message: 'Já existe um usuário cadastrado com este e-mail!'
-      }
-      return result;
+      return userExists;
     }
     else {
       conn.close();
