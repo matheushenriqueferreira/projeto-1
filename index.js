@@ -21,19 +21,24 @@ app.post('/registration', async (req, res) => {
   if(!userPassword) {
     return res.status(422).json({message: "Insira uma senha"});
   }
-  
-  // Verifica se já existe e-mail cadastrado
-  const userExists = await User.findOne(userEmail);
-  
-  if(userExists) {
-    return res.status(422).json({message: 'Já existe um usuário cadastrado com este e-mail!'});
+
+  try {
+    // Verifica se já existe e-mail cadastrado
+    const userExists = await User.findOne(userEmail);
+    
+    if(userExists) {
+      return res.status(422).json({message: 'Já existe um usuário cadastrado com este e-mail!'});
+    }
+    else {
+      const resInsert = await User.insert({
+        userEmail,
+        userPassword
+      });
+      return res.status(resInsert.status).json({message: resInsert.message});
+    }
   }
-  else {
-    const resInsert = await User.insert({
-      userEmail,
-      userPassword
-    });
-    return res.status(resInsert.status).json({message: resInsert.message});
+  catch(error) {
+    return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
   }
 })
 
@@ -50,19 +55,24 @@ app.post('/login',  async (req, res) => {
     return res.status(422).json({message: "Insira uma senha"});
   }
 
-  // Verifica se já existe e-mail cadastrado
-  const user = await User.findOne(userEmail);
-  
-  if(!user) {
-    return res.status(404).json({message: 'Não foi encontrado cadastro vinculado a este e-mail'});
+  try {
+    // Verifica se já existe e-mail cadastrado
+    const user = await User.findOne(userEmail);
+    
+    if(!user) {
+      return res.status(404).json({message: 'Não foi encontrado cadastro vinculado a este e-mail'});
+    }
+    
+    //Verificar senha
+    if(userPassword !== user.password) {
+      return res.status(422).json({message: 'Senha inválida'});
+    }
+    else {
+      res.status(200).json({message: 'Usuário autenticado'});
+    }
   }
-  
-  //Verificar senha
-  if(userPassword !== user.password) {
-    return res.status(422).json({message: 'Senha inválida'});
-  }
-  else {
-    res.status(200).json({message: 'Usuário autenticado'});
+  catch(error) {
+    return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
   }
 })
 
@@ -79,31 +89,41 @@ app.post('/auth/insert/characters', async (req, res) => {
     return res.status(422).json({message: "Insira a imagem do personagem"});
   }
 
-   // Verifica se já existe um nome cadastrado
-   const characterExists = await Psychonauts.findOne(psychoName);
-  
-   if(characterExists) {
-     return res.status(422).json({message: 'Já existe um personagem cadastrado com este nome!'});
-   }
-   else {
-     const resInsert = await Psychonauts.insert({
-       psychoName,
-       psychoImage
-     });
-     return res.status(resInsert.status).json({message: resInsert.message});
-   }
+  try { 
+    // Verifica se já existe um nome cadastrado
+    const characterExists = await Psychonauts.findOne(psychoName);
+    
+    if(characterExists) {
+      return res.status(422).json({message: 'Já existe um personagem cadastrado com este nome!'});
+    }
+    else {
+      const resInsert = await Psychonauts.insert({
+        psychoName,
+        psychoImage
+      });
+      return res.status(resInsert.status).json({message: resInsert.message});
+    }
+  }
+  catch(error) {
+    return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
+  }
 })
 
 //
 // Recuperar dados dos personagens
 app.get('/characters', async (req, res) => {
-  const charactersExists = await Psychonauts.find();
+  try {
+    const charactersExists = await Psychonauts.find();
 
-  if(charactersExists) {
-    return res.status(201).json({charactersExists});
+    if(charactersExists) {
+      return res.status(201).json({charactersExists});
+    }
+    else {
+      return res.status(404).json({message: 'Banco de dados vazio ou inexistente'});
+    }
   }
-  else {
-    return res.status(404).json({message: 'Banco de dados vazio ou inexistente'});
+  catch(error) {
+    return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
   }
 })
 
@@ -111,13 +131,18 @@ app.get('/characters', async (req, res) => {
 // Recuperar dados dos personagens por nome
 app.get('/characters/:name', async (req, res) => {
   const name = req.params.name;
-  const character = await Psychonauts.findOne(name);
-
-  if(character) {
-    return res.status(201).json({character});
+  try {
+    const character = await Psychonauts.findOne(name);
+  
+    if(character) {
+      return res.status(201).json({character});
+    }
+    else {
+      return res.status(404).json({message: 'Personagem não encontrado'});
+    }
   }
-  else {
-    return res.status(404).json({message: 'Personagem não encontrado'});
+  catch(error) {
+    return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
   }
 })
 

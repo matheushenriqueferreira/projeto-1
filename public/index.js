@@ -91,8 +91,9 @@ window.onload = function() {
       handleAddListToPage(listCharacters.length);//chama a função handleAddListToPage passando 4 como parametro
     })
     .catch((error) => {
+      const {message} = error.response.data;
       ul.innerHTML = ''
-      errorMsg.innerHTML = error;
+      errorMsg.innerHTML = `Status: ${error.response.status}.<br>${message}`;
       ul.appendChild(errorMsg);
     })
   }
