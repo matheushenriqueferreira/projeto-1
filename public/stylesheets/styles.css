@@ -367,7 +367,7 @@ main {
 #searchContainer {
   display: flex;
   justify-content: center;
-  padding: 50px 0;
+  padding: 15px 0;
   background-color: var(--bg-colorBlack);
   gap: 3em;
 }
@@ -417,6 +417,34 @@ main {
 
 #inputRangeValue {
   color: var(--text-colorWhite);
+}
+
+#psychonautsInsertContent {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 3px solid #dfdfdf;
+  border-bottom: 3px solid #dfdfdf;
+  gap: 5em;
+}
+
+#psychonautsInsertContent2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3em;
+}
+
+#psychonautsImagePreviewContainer {
+  width: 200px;
+  height: 150px;
+  border: 2px dotted #5c5c5c;
+}
+
+#psychonautsImagePreview {
+  max-width: 199px;
+  max-height: 149px;
 }
 
 #psychonautsContainer {

@@ -35,6 +35,15 @@ window.onload = function() {
   const successfulMsg = document.createElement('p');
   successfulMsg.setAttribute("id", 'successfulMsg');
 
+  const psychonautsInsertSection = document.createElement("section");
+  const psychonautsInsertContent = document.createElement("div");
+  const psychonautsInsertContent2 = document.createElement("div");
+  const psychonautsImagePreviewContainer = document.createElement("div");
+  const psychonautsImagePreview = document.createElement("img");
+  const psychonautsInputName = document.createElement("input");
+  const psychonautsInputImage = document.createElement("input");
+  const psychonautsInputButton = document.createElement("input");
+
   const section2BtnRegister = document.querySelector('#section2BtnRegister');
 
   const storage = localStorage;
@@ -106,9 +115,17 @@ window.onload = function() {
       searchContainer.setAttribute('id', 'searchContainer');
       psychonautsContainer.setAttribute('id', 'psychonautsContainer');
       
+      psychonautsInsertSection.setAttribute('id', 'psychonautsInsertSection');
+      psychonautsInsertContent.setAttribute('id', 'psychonautsInsertContent');
+      psychonautsInsertContent2.setAttribute('id', 'psychonautsInsertContent2');
+      psychonautsImagePreviewContainer.setAttribute('id', 'psychonautsImagePreviewContainer');
+      psychonautsInsertSection.appendChild(psychonautsInsertContent);
+      
       mainContainer.appendChild(content);
       content.appendChild(searchContainer);
+      content.appendChild(psychonautsInsertSection);
       content.appendChild(psychonautsContainer);
+      
 
       inputSearch.setAttribute('id', 'inputSearch');
       inputSearch.setAttribute('type', 'text');
@@ -129,8 +146,26 @@ window.onload = function() {
       inputRangeValue.setAttribute('id', 'inputRangeValue');
       inputRangeValue.innerHTML = '4';
 
-      inputRangeContainer.appendChild(inputRange)
-      inputRangeContainer.appendChild(inputRangeValue)
+      inputRangeContainer.appendChild(inputRange);
+      inputRangeContainer.appendChild(inputRangeValue);
+
+      psychonautsInsertContent.appendChild(psychonautsImagePreviewContainer);
+      psychonautsInsertContent.appendChild(psychonautsInsertContent2);
+
+      psychonautsImagePreview.setAttribute('id', 'psychonautsImagePreview');
+      psychonautsInputName.setAttribute('id', 'psychonautsInputName');
+      psychonautsInputName.setAttribute('type', 'text');
+      psychonautsInputName.setAttribute('placeholder', 'Insira o nome do personagem');
+      psychonautsInputImage.setAttribute('id', 'psychonautsInputImage')
+      psychonautsInputImage.setAttribute('type', 'file')
+      psychonautsInputImage.setAttribute('accept', '.jpg,.png')
+      psychonautsInputButton.setAttribute('id', 'psychonautsInputButton')
+      psychonautsInputButton.setAttribute('type', 'button')
+      psychonautsInputButton.setAttribute('value', 'Cadastrar')
+
+      psychonautsInsertContent2.appendChild(psychonautsInputName)
+      psychonautsInsertContent2.appendChild(psychonautsInputImage)
+      psychonautsInsertContent2.appendChild(psychonautsInputButton)
 
       ul.setAttribute('id', 'listContainer')
 
@@ -337,6 +372,7 @@ window.onload = function() {
 
   section2BtnRegister.addEventListener('click', () => createRegistrationAndLoginPage('Registration'));
 
+  //
   //Lida com o click do btnRegistrationAndLogin na página de Registro e de login
   registrationAndLoginLink.addEventListener('click', () => {
     const value = btnRegistrationAndLogin.value;
@@ -347,6 +383,16 @@ window.onload = function() {
       case 'Cadastrar':
         createRegistrationAndLoginPage('Login');
       break;
+    }
+  })
+
+  //
+  // Lidar com o input de imagem para cadastro de personagens
+  psychonautsInputImage.addEventListener('change', async (img) => {
+    if(img.target.files[0]) {
+      
+      console.log(img.target.files[0])
+      //psychonautsImagePreviewContainer.appendChild(psychonautsImagePreview)
     }
   })
 
