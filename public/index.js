@@ -53,13 +53,14 @@ window.onload = function() {
 
   //Adiciona os itens da listCharacters a ul;
   const handleAddListToPage = (limit) => {
+    console.log(listCharacters.length);
     ul.innerHTML = '';
     for(let i = 0; i < limit; i++) {
       const li = document.createElement('li');
       li.setAttribute('class', 'listContent');
       
       const img = document.createElement('img');
-      img.setAttribute('src', listCharacters[i].img);
+      img.setAttribute('src', listCharacters[i].image);
       img.setAttribute('class', 'psychonautsImg');
       
       const p = document.createElement('p');
@@ -74,13 +75,16 @@ window.onload = function() {
 
   //Faz a requisição da lista de personagens e adiciona os itens a listCharacters
   const handleGetCharacters = () => {
-    axios.get(`https://psychonauts-api.herokuapp.com/api/characters?limit=20`)
+    axios.get(`http://localhost:3000/characters`)
     .then((resp) => {
-      resp.data.forEach(element => {
+      resp.data.charactersExists.forEach(element => {
         listCharacters.push(element);
       });
       inputRange.setAttribute('max', `${listCharacters.length}`);
-      handleAddListToPage(4);//chama a função handleAddListToPage passando 4 como parametro
+      inputRange.setAttribute('value', `${listCharacters.length}`);
+      inputRangeValue.innerHTML = `${listCharacters.length}`;
+
+      handleAddListToPage(listCharacters.length);//chama a função handleAddListToPage passando 4 como parametro
     })
     .catch((error) => {
       ul.innerHTML = ''
@@ -142,12 +146,12 @@ window.onload = function() {
       
       inputRange.setAttribute('id', 'inputRange');
       inputRange.setAttribute('type', 'range');
-      inputRange.setAttribute('value', '4');
+      inputRange.setAttribute('value', '1');
       inputRange.setAttribute('step', '1');
-      inputRange.setAttribute('min', '4');
+      inputRange.setAttribute('min', '1');
 
       inputRangeValue.setAttribute('id', 'inputRangeValue');
-      inputRangeValue.innerHTML = '4';
+      inputRangeValue.innerHTML = '1';
 
       inputRangeContainer.appendChild(inputRange);
       inputRangeContainer.appendChild(inputRangeValue);
@@ -179,7 +183,7 @@ window.onload = function() {
       searchContainer.appendChild(inputRangeContainer);
       psychonautsContainer.appendChild(ul);
     }
-    //handleGetCharacters();//chama a função que faz a requisição a API 
+    handleGetCharacters();// Função para recuperar dados dos personagens
   }
 
   //
@@ -403,6 +407,8 @@ window.onload = function() {
     }
   })
 
+  //
+  // Lidar com a cadastro de personagens ao cliclar no botão cadastrar
   psychonautsInputButton.addEventListener('click', () => {
     psychonautsInputContentMsg.innerHTML = '';
     const psychoName = document.querySelector('#psychonautsInputName').value

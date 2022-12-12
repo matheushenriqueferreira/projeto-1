@@ -79,7 +79,7 @@ app.post('/auth/insert/characters', async (req, res) => {
     return res.status(422).json({message: "Insira a imagem do personagem"});
   }
 
-   // Verifica se já existe e-mail cadastrado
+   // Verifica se já existe um nome cadastrado
    const characterExists = await Psychonauts.findOne(psychoName);
   
    if(characterExists) {
@@ -92,6 +92,19 @@ app.post('/auth/insert/characters', async (req, res) => {
      });
      return res.status(resInsert.status).json({message: resInsert.message});
    }
+})
+
+//
+// Recuperar dados dos personagens
+app.get('/characters', async (req, res) => {
+  const charactersExists = await Psychonauts.find();
+
+  if(charactersExists) {
+    return res.status(201).json({charactersExists});
+  }
+  else {
+    return res.status(404).json({message: 'Banco de dados vazio ou inexistente'});
+  }
 
 })
 

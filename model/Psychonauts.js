@@ -24,11 +24,26 @@ export class Psychonauts {
   static async findOne(psychoName) {
     const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
     const db = conn.db();
-    const userExists = await db.collection('psychonauts').findOne({ name: psychoName })
+    const psychonautsExists = await db.collection('psychonauts').findOne({ name: psychoName })
 
-    if(userExists) {
+    if(psychonautsExists) {
       conn.close();
-      return userExists;
+      return psychonautsExists;
+    }
+    else {
+      conn.close();
+      return null;
+    }
+  }
+
+  static async find() {
+    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
+    const db = conn.db();
+    const psychonautsExists = await db.collection('psychonauts').find().toArray();
+
+    if(psychonautsExists) {
+      conn.close();
+      return psychonautsExists;
     }
     else {
       conn.close();
