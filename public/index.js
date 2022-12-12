@@ -43,6 +43,7 @@ window.onload = function() {
   const psychonautsInputName = document.createElement("input");
   const psychonautsInputImage = document.createElement("input");
   const psychonautsInputButton = document.createElement("input");
+  const psychonautsInputContentMsg = document.createElement("p");
 
   const section2BtnRegister = document.querySelector('#section2BtnRegister');
 
@@ -97,7 +98,9 @@ window.onload = function() {
       successfulMsg.innerHTML = resp.data.message;
     })
     .catch((error) => {
-      errorMsg.innerHTML = error;
+      successfulMsg.innerHTML = '';
+      const {message} = error.response.data;
+      errorMsg.innerHTML = `Status: ${error.response.status}.<br>${message}`;
     })
   }
 
@@ -162,10 +165,12 @@ window.onload = function() {
       psychonautsInputButton.setAttribute('id', 'psychonautsInputButton')
       psychonautsInputButton.setAttribute('type', 'button')
       psychonautsInputButton.setAttribute('value', 'Cadastrar')
+      psychonautsInputContentMsg.setAttribute('id', 'psychonautsInputContentMsg');
 
       psychonautsInsertContent2.appendChild(psychonautsInputName)
       psychonautsInsertContent2.appendChild(psychonautsInputImage)
       psychonautsInsertContent2.appendChild(psychonautsInputButton)
+      psychonautsInsertContent2.appendChild(psychonautsInputContentMsg);
 
       ul.setAttribute('id', 'listContainer')
 
@@ -188,7 +193,9 @@ window.onload = function() {
       createHomePage();
     })
     .catch((error) => {
-      errorMsg.innerHTML = error;
+      successfulMsg.innerHTML = '';
+      const {message} = error.response.data;
+      errorMsg.innerHTML = `Status: ${error.response.status}.<br>${message}`;
     });
   }
 
@@ -373,7 +380,7 @@ window.onload = function() {
   section2BtnRegister.addEventListener('click', () => createRegistrationAndLoginPage('Registration'));
 
   //
-  //Lida com o click do btnRegistrationAndLogin na página de Registro e de login
+  // Lidar com o click do btnRegistrationAndLogin na página de Registro e de login
   registrationAndLoginLink.addEventListener('click', () => {
     const value = btnRegistrationAndLogin.value;
     switch(value) {
@@ -394,6 +401,25 @@ window.onload = function() {
       console.log(img.target.files[0])
       //psychonautsImagePreviewContainer.appendChild(psychonautsImagePreview)
     }
+  })
+
+  psychonautsInputButton.addEventListener('click', () => {
+    psychonautsInputContentMsg.innerHTML = '';
+    const psychoName = document.querySelector('#psychonautsInputName').value
+    
+    const content = {
+      psychoName,
+      psychoImage: 'teste'
+    }
+    
+    axios.post('http://localhost:3000/auth/insert/characters', content)
+    .then((resp) => {
+      psychonautsInputContentMsg.innerHTML = '';
+    })
+    .catch((error) => {
+      const {message} = error.response.data;
+      psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
+    })
   })
 
   createHomePage();

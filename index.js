@@ -1,5 +1,6 @@
 import express from "express";
 import { User } from './model/User.js';
+import { Psychonauts } from "./model/Psychonauts.js";
 import { expressjwt } from "express-jwt";
 
 const app = express();
@@ -8,6 +9,7 @@ app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+//
 // Cadastro de usuário
 app.post('/registration', async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -35,6 +37,7 @@ app.post('/registration', async (req, res) => {
   }
 })
 
+//
 // Login de usuário
 app.post('/login',  async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -61,6 +64,35 @@ app.post('/login',  async (req, res) => {
   else {
     res.status(200).json({message: 'Usuário autenticado'});
   }
+})
+
+//
+// Inserção de personagens
+app.post('/auth/insert/characters', async (req, res) => {
+  const {psychoName , psychoImage} = req.body;
+
+  if(!psychoName) {
+    return res.status(422).json({message: "Insira o nome do personagem"});
+  }
+  
+  if(!psychoImage) {
+    return res.status(422).json({message: "Insira a imagem do personagem"});
+  }
+
+   // Verifica se já existe e-mail cadastrado
+   const characterExists = await Psychonauts.findOne(psychoName);
+  
+   if(characterExists) {
+     return res.status(422).json({message: 'Já existe um personagem cadastrado com este nome!'});
+   }
+   else {
+     const resInsert = await Psychonauts.insert({
+       psychoName,
+       psychoImage
+     });
+     return res.status(resInsert.status).json({message: resInsert.message});
+   }
+
 })
 
 app.use((req, res) => {

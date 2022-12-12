@@ -424,7 +424,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  padding: 25px 0;
   border-top: 3px solid #dfdfdf;
   border-bottom: 3px solid #dfdfdf;
   gap: 5em;
@@ -434,6 +434,11 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.3em;
+}
+
+#psychonautsInputContentMsg {
+  font-size: 11px;
+  color: red;
 }
 
 #psychonautsImagePreviewContainer {
