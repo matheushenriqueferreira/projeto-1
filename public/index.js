@@ -53,7 +53,6 @@ window.onload = function() {
 
   //Adiciona os itens da listCharacters a ul;
   const handleAddListToPage = (limit) => {
-    console.log(listCharacters.length);
     ul.innerHTML = '';
     for(let i = 0; i < limit; i++) {
       const li = document.createElement('li');
@@ -306,19 +305,20 @@ window.onload = function() {
     searchError.setAttribute('id', 'searchError');
     
     if(inputSearch.value !== '') {
-      axios.get(`https://psychonauts-api.herokuapp.com/api/characters?name=${inputSearch.value}`)
+      axios.get(`http://localhost:3000/characters/${inputSearch.value}`, {search: inputSearch.value})
       .then((resp) => {
-        if(resp.data) {
+        console.log(resp.data.character)
+        if(resp.data.character) {
           psychonautsContainer.innerHTML = '';
           ul.innerHTML = '';
           const li = document.createElement('li');
           li.setAttribute('class', 'listContent');
           const img = document.createElement('img');
-          img.setAttribute('src', resp.data.img);
+          img.setAttribute('src', resp.data.character.img);
           img.setAttribute('class', 'psychonautsImg');
           const p = document.createElement('p');
           p.setAttribute('class', 'psychonautsName');
-          p.innerText = resp.data.name;
+          p.innerText = resp.data.character.name;
           li.appendChild(img)
           li.appendChild(p)
           ul.appendChild(li);
@@ -331,8 +331,9 @@ window.onload = function() {
         }
       })
       .catch((error) => {
+        const {message} = error.response.data;
         ul.innerHTML = '';
-        searchError.innerHTML = error;
+        searchError.innerHTML = `Status: ${error.response.status}<br>${message}`;
         ul.appendChild(searchError);
       })
     }
@@ -421,6 +422,7 @@ window.onload = function() {
     axios.post('http://localhost:3000/auth/insert/characters', content)
     .then((resp) => {
       psychonautsInputContentMsg.innerHTML = '';
+      document.location.reload();
     })
     .catch((error) => {
       const {message} = error.response.data;

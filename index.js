@@ -105,8 +105,22 @@ app.get('/characters', async (req, res) => {
   else {
     return res.status(404).json({message: 'Banco de dados vazio ou inexistente'});
   }
-
 })
+
+//
+// Recuperar dados dos personagens por nome
+app.get('/characters/:name', async (req, res) => {
+  const name = req.params.name;
+  const character = await Psychonauts.findOne(name);
+
+  if(character) {
+    return res.status(201).json({character});
+  }
+  else {
+    return res.status(404).json({message: 'Personagem não encontrado'});
+  }
+})
+
 
 app.use((req, res) => {
   res.status(404).json({ 
