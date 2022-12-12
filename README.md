@@ -22,7 +22,6 @@
 ## :file_folder: Acesso ao projeto e website
 
 Acesse o código fonte em: [GitHub-projeto-web](https://github.com/matheushenriqueferreira/projeto-web).
-Acesse o Website: [Projeto-web](https://matheushenriqueferreira.github.io/projeto-web/).
 
 
 ## :hash: Tecnologias utilizadas
