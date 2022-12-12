@@ -64,7 +64,7 @@ a {
   color: var(--color-green);
 }
 
-#headerLinkHelp, #headerLinkLogin, #headerBtnDownload {
+#headerLinkSearch, #headerLinkLogin, #headerBtnDownload {
   display: block;
 }
 
@@ -499,7 +499,12 @@ main {
 .psychonautsName {
   font-size: 11px;
   font-weight: bold;
-  text-transform: uppercase;
+}
+
+.noCharactersMsg {
+  font-size: 12px;
+  color: red;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -613,7 +618,7 @@ main {
     padding: 0 40px;
   }
   
-  .headerNav, #headerLinkHelp, #headerLinkLogin, #headerBtnDownload {
+  .headerNav, #headerLinkSearch, #headerLinkLogin, #headerBtnDownload {
     display: none;
   }
 

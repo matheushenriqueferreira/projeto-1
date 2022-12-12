@@ -15,7 +15,7 @@ window.onload = function() {
   
   const headerLinkLogin = document.querySelector("#headerLinkLogin");
   const section2LinkLogin = document.querySelector("#section2LinkLogin");
-  const headerLinkHelp = document.querySelector("#headerLinkHelp");
+  const headerLinkSearch = document.querySelector("#headerLinkSearch");
   const headerBtnDownload = document.querySelector("#headerBtnDownload");
   
   const btnSearch = document.createElement("button");
@@ -49,11 +49,15 @@ window.onload = function() {
 
   const storage = localStorage;
 
-  const listCharacters = [];
+  let listCharacters = [];
 
   //Adiciona os itens da listCharacters a ul;
   const handleAddListToPage = (limit) => {
     ul.innerHTML = '';
+    if(listCharacters.length === 0) {
+      errorMsg.innerHTML = 'Nenhum personagem cadastrado.';
+      ul.appendChild(errorMsg);
+    }
     for(let i = 0; i < limit; i++) {
       const li = document.createElement('li');
       li.setAttribute('class', 'listContent');
@@ -74,6 +78,7 @@ window.onload = function() {
 
   //Faz a requisição da lista de personagens e adiciona os itens a listCharacters
   const handleGetCharacters = () => {
+    listCharacters = [];
     axios.get(`http://localhost:3000/characters`)
     .then((resp) => {
       resp.data.charactersExists.forEach(element => {
@@ -82,7 +87,7 @@ window.onload = function() {
       inputRange.setAttribute('max', `${listCharacters.length}`);
       inputRange.setAttribute('value', `${listCharacters.length}`);
       inputRangeValue.innerHTML = `${listCharacters.length}`;
-
+      
       handleAddListToPage(listCharacters.length);//chama a função handleAddListToPage passando 4 como parametro
     })
     .catch((error) => {
@@ -114,7 +119,7 @@ window.onload = function() {
       mainContainer.innerHTML = '';
       headerLinkLogin.innerHTML = 'Sair'
       headerContainerLogin.innerHTML = 'Sair'
-      headerLinkHelp.remove();
+      headerLinkSearch.remove();
       headerBtnDownload.remove();
 
       content.setAttribute('id', 'content');
@@ -181,8 +186,8 @@ window.onload = function() {
       searchContainer.appendChild(btnSearch);
       searchContainer.appendChild(inputRangeContainer);
       psychonautsContainer.appendChild(ul);
+      handleGetCharacters();// Função para recuperar dados dos personagens
     }
-    handleGetCharacters();// Função para recuperar dados dos personagens
   }
 
   //
@@ -428,6 +433,51 @@ window.onload = function() {
       const {message} = error.response.data;
       psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
     })
+  })
+
+  //
+  // Ao clicar no botão pesquisar, ir para página de busca sem cadastro
+  headerLinkSearch.addEventListener('click', () => {
+    mainContainer.innerHTML = '';
+
+    content.setAttribute('id', 'content');
+    searchContainer.setAttribute('id', 'searchContainer');
+    psychonautsContainer.setAttribute('id', 'psychonautsContainer');
+    
+    mainContainer.appendChild(content);
+    content.appendChild(searchContainer);
+    content.appendChild(psychonautsContainer);
+
+    inputSearch.setAttribute('id', 'inputSearch');
+    inputSearch.setAttribute('type', 'text');
+    inputSearch.setAttribute('placeholder', 'Insira o nome');
+    
+    btnSearch.setAttribute('id', 'btnSearch');
+    btnSearch.setAttribute('type', 'button');
+    btnSearch.innerText = 'Buscar';
+
+    inputRangeContainer.setAttribute('id', 'inputRangeContainer');
+    
+    inputRange.setAttribute('id', 'inputRange');
+    inputRange.setAttribute('type', 'range');
+    inputRange.setAttribute('value', '1');
+    inputRange.setAttribute('step', '1');
+    inputRange.setAttribute('min', '1');
+
+    inputRangeValue.setAttribute('id', 'inputRangeValue');
+    inputRangeValue.innerHTML = '1';
+
+    inputRangeContainer.appendChild(inputRange)
+    inputRangeContainer.appendChild(inputRangeValue)
+
+    ul.setAttribute('id', 'listContainer')
+
+    searchContainer.appendChild(inputSearch);
+    searchContainer.appendChild(btnSearch);
+    searchContainer.appendChild(inputRangeContainer);
+    psychonautsContainer.appendChild(ul);
+      
+    handleGetCharacters();
   })
 
   createHomePage();
