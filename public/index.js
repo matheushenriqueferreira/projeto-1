@@ -38,9 +38,13 @@ window.onload = function() {
   const psychonautsInsertSection = document.createElement("section");
   const psychonautsInsertContent = document.createElement("div");
   const psychonautsInsertContent2 = document.createElement("div");
-  const psychonautsImagePreviewContainer = document.createElement("div");
+  const psychonautsPreviewContainer = document.createElement("div");
+  const psychonautsNamePreview = document.createElement("p");
   const psychonautsImagePreview = document.createElement("img");
   const psychonautsInputName = document.createElement("input");
+  const psychonautsInputFileContainer = document.createElement("div");
+  const psychonautsInputImageName = document.createElement("p");
+  const psychonautsInputImageLabel = document.createElement("label");
   const psychonautsInputImage = document.createElement("input");
   const psychonautsInputButton = document.createElement("input");
   const psychonautsInputContentMsg = document.createElement("p");
@@ -130,7 +134,8 @@ window.onload = function() {
       psychonautsInsertSection.setAttribute('id', 'psychonautsInsertSection');
       psychonautsInsertContent.setAttribute('id', 'psychonautsInsertContent');
       psychonautsInsertContent2.setAttribute('id', 'psychonautsInsertContent2');
-      psychonautsImagePreviewContainer.setAttribute('id', 'psychonautsImagePreviewContainer');
+      psychonautsPreviewContainer.setAttribute('id', 'psychonautsPreviewContainer');
+      psychonautsPreviewContainer.setAttribute('class', 'listContent');
       psychonautsInsertSection.appendChild(psychonautsInsertContent);
       
       mainContainer.appendChild(content);
@@ -161,24 +166,41 @@ window.onload = function() {
       inputRangeContainer.appendChild(inputRange);
       inputRangeContainer.appendChild(inputRangeValue);
 
-      psychonautsInsertContent.appendChild(psychonautsImagePreviewContainer);
+      psychonautsInsertContent.appendChild(psychonautsPreviewContainer);
       psychonautsInsertContent.appendChild(psychonautsInsertContent2);
 
+      psychonautsNamePreview.setAttribute('id', 'psychonautsNamePreview');
+      psychonautsNamePreview.setAttribute('class', 'psychonautsName');
       psychonautsImagePreview.setAttribute('id', 'psychonautsImagePreview');
+      psychonautsImagePreview.setAttribute('class', 'psychonautsImg');
       psychonautsInputName.setAttribute('id', 'psychonautsInputName');
       psychonautsInputName.setAttribute('type', 'text');
       psychonautsInputName.setAttribute('placeholder', 'Insira o nome do personagem');
-      psychonautsInputImage.setAttribute('id', 'psychonautsInputImage')
-      psychonautsInputImage.setAttribute('type', 'file')
-      psychonautsInputImage.setAttribute('accept', '.jpg,.png')
-      psychonautsInputButton.setAttribute('id', 'psychonautsInputButton')
-      psychonautsInputButton.setAttribute('type', 'button')
-      psychonautsInputButton.setAttribute('value', 'Cadastrar')
+      psychonautsInputFileContainer.setAttribute('id', 'psychonautsInputFileContainer');
+      psychonautsInputImageName.setAttribute('id', 'psychonautsInputImageName');
+      psychonautsInputImageLabel.setAttribute('id', 'psychonautsInputImageLabel');
+      psychonautsInputImageLabel.setAttribute('for', 'psychonautsInputImage');
+      psychonautsInputImage.setAttribute('id', 'psychonautsInputImage');
+      psychonautsInputImage.setAttribute('type', 'file');
+      psychonautsInputImage.setAttribute('accept', '.jpg,.png');
+      psychonautsInputButton.setAttribute('id', 'psychonautsInputButton');
+      psychonautsInputButton.setAttribute('type', 'button');
+      psychonautsInputButton.setAttribute('value', 'Cadastrar');
       psychonautsInputContentMsg.setAttribute('id', 'psychonautsInputContentMsg');
 
-      psychonautsInsertContent2.appendChild(psychonautsInputName)
-      psychonautsInsertContent2.appendChild(psychonautsInputImage)
-      psychonautsInsertContent2.appendChild(psychonautsInputButton)
+      psychonautsInputImageName.innerHTML = 'Escolha uma imagem...';
+      psychonautsInputImageLabel.innerHTML = 'Selecionar';
+      psychonautsInputFileContainer.appendChild(psychonautsInputImage);
+      psychonautsInputFileContainer.appendChild(psychonautsInputImageName);
+      psychonautsInputFileContainer.appendChild(psychonautsInputImageLabel);
+
+      psychonautsPreviewContainer.appendChild(psychonautsImagePreview);
+      psychonautsPreviewContainer.appendChild(psychonautsNamePreview);
+
+
+      psychonautsInsertContent2.appendChild(psychonautsInputName);
+      psychonautsInsertContent2.appendChild(psychonautsInputFileContainer);
+      psychonautsInsertContent2.appendChild(psychonautsInputButton);
       psychonautsInsertContent2.appendChild(psychonautsInputContentMsg);
 
       ul.setAttribute('id', 'listContainer')
@@ -406,11 +428,15 @@ window.onload = function() {
 
   //
   // Lidar com o input de imagem para cadastro de personagens
-  psychonautsInputImage.addEventListener('change', async (img) => {
+  psychonautsInputImage.addEventListener('change', (img) => {
     if(img.target.files[0]) {
-      
-      console.log(img.target.files[0])
-      //psychonautsImagePreviewContainer.appendChild(psychonautsImagePreview)
+      psychonautsInputImageName.innerHTML = img.target.files[0].name;
+      const url = URL.createObjectURL(img.target.files[0]);
+      psychonautsImagePreview.src = url;
+    }
+    else {
+      psychonautsImagePreview.src = '';
+      psychonautsInputImageName.innerHTML = 'Escolha uma imagem...';
     }
   })
 
@@ -479,6 +505,12 @@ window.onload = function() {
     psychonautsContainer.appendChild(ul);
       
     handleGetCharacters();
+  })
+
+  //
+  // Insere o nome do personagem na prévia
+  psychonautsInputName.addEventListener('change', (name) => {
+    psychonautsNamePreview.innerText = name.target.value;
   })
 
   createHomePage();

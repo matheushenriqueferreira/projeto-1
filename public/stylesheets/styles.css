@@ -35,6 +35,10 @@ a {
   cursor: pointer;
 }
 
+input[type='file'] {
+  display: none;
+}
+
 .headerFixed {
   position: fixed;
   width: 100%;
@@ -381,6 +385,15 @@ main {
   height: 30px;
   padding-left: 10px;
   color: var(--text-colorWhite);
+  transition: all .2s ease-in;
+}
+
+#inputSearch:focus {
+  border-color: var(--color-green2);
+}
+
+#inputSearch:hover {
+  border-color: var(--color-green2);
 }
 
 #btnSearch {
@@ -433,23 +446,100 @@ main {
 #psychonautsInsertContent2 {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.3em;
+}
+
+#psychonautsInputName {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  padding-left: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: all .2s ease-in;
+}
+
+#psychonautsInputName:focus {
+  border: 1px solid rgba(0, 168, 45, 0.5);
+  box-shadow: 2px 2px 2px 1px rgba(0, 168, 45, 0.5);
+}
+
+#psychonautsInputName:hover {
+  border: 1px solid rgba(0, 168, 45, 0.5);
+  box-shadow: 2px 2px 2px 1px rgba(0, 168, 45, 0.5);
+}
+
+#psychonautsInputFileContainer {
+  display: flex;
+  align-items: center;
+  width: 278px;
+  height: 45px;
+  padding: 0 10px;
+  border-radius: 3px;
+  border: 1px solid #dfdfdf;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: all .2s ease-in;
+}
+
+#psychonautsInputFileContainer:hover {
+  border: 1px solid rgba(0, 168, 45, 0.5);
+  box-shadow: 2px 2px 2px 1px rgba(0, 168, 45, 0.5);
+}
+
+#psychonautsInputImageName {
+  flex: 1;
+  word-break: break-all;
+}
+
+#psychonautsInputImageName, #psychonautsInputImageLabel {
+  font-size: 12px;
+}
+
+#psychonautsInputImageLabel {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  height: 30px;
+  border-radius: 3px;
+  border: 2px solid #dfdfdf;
+  cursor: pointer;
+  transition: all .2s ease-in;
+}
+
+#psychonautsInputImageName, #psychonautsInputImageLabel {
+  color: #7c7c7c;
+  font-weight: 700;
+  transition: all .2s ease-in;
+}
+
+#psychonautsInputImageLabel:hover {
+  border-color: rgba(0, 168, 45, 0.5);
+}
+
+#psychonautsInputButton {
+  color: var(--color-green);
+  width: 50%;
+  height: 25px;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: all .2s ease-in;
+}
+
+#psychonautsInputButton:hover {
+  color: var(--color-green2);
+  border: 1px solid rgba(0, 168, 45, 0.5);
+  box-shadow: 2px 2px 2px 1px rgba(0, 168, 45, 0.5);
 }
 
 #psychonautsInputContentMsg {
   font-size: 11px;
   color: red;
-}
-
-#psychonautsImagePreviewContainer {
-  width: 200px;
-  height: 150px;
-  border: 2px dotted #5c5c5c;
-}
-
-#psychonautsImagePreview {
-  max-width: 199px;
-  max-height: 149px;
 }
 
 #psychonautsContainer {
@@ -492,13 +582,14 @@ main {
 
 .psychonautsImg {
   border-radius: 3px;
-  max-width: 250px;
+  max-width: 200px;
   max-height: 150px;
 }
 
 .psychonautsName {
   font-size: 11px;
   font-weight: bold;
+  word-break: break-all;
 }
 
 .noCharactersMsg {
@@ -590,13 +681,23 @@ main {
     height: 30px;
   }
 
+  #psychonautsInsertContent {
+    flex-direction: column-reverse;
+    gap: .8em;
+  }
+
+  #inputSearch, #btnSearch, #inputRangeValue, #psychonautsInputName, #psychonautsInputImageName, #psychonautsInputImageLabel, #psychonautsInputButton {
+    font-size: 11px;
+  }
+
   .listContent {
     width: 150px;
     height: 150px;
   }
   
   .psychonautsImg {
-    max-height: 100px;
+    width: 130px;
+    height: 100px;
   }
 
   .psychonautsName {
