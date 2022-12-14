@@ -2,7 +2,7 @@ import { User } from "../model/User.js";
 
 export class UserController {
   static async registration(req, res) {
-    const { userEmail, userPassword } = req.body;
+    const { userEmail, userPassword, userConfirmPassword } = req.body;
   
     if(!userEmail) {
       return res.status(422).json({message: "Insira um e-mail"});
@@ -10,6 +10,14 @@ export class UserController {
     
     if(!userPassword) {
       return res.status(422).json({message: "Insira uma senha"});
+    }
+    
+    if(!userConfirmPassword) {
+      return res.status(422).json({message: "Confirme sua senha"});
+    }
+
+    if(userPassword !== userConfirmPassword) {
+      return res.status(422).json({message: "As senhas não são iguais. Tente novamente."});
     }
 
     try {

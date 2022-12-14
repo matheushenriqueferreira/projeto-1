@@ -7,6 +7,7 @@ window.onload = function() {
   const registrationAndLoginDiv = document.createElement("div");
   const inputEmail = document.createElement("input");
   const inputPassword = document.createElement("input");
+  const inputConfirmPassword = document.createElement("input");
   const btnRegistrationAndLogin = document.createElement("input");
   const hr = document.createElement("hr");
   const registrationAndLoginLinkContainer = document.createElement("div");
@@ -30,8 +31,10 @@ window.onload = function() {
   const menuIcon = document.querySelector("#menuIcon");
   const headerContainerLogin = document.querySelector("#headerContainerLogin");
   const logo = document.querySelector("#logo");
+  
   const errorMsg = document.createElement("p");
   errorMsg.setAttribute("id", 'errorMsg');
+  
   const successfulMsg = document.createElement('p');
   successfulMsg.setAttribute("id", 'successfulMsg');
 
@@ -55,8 +58,9 @@ window.onload = function() {
 
   let listCharacters = [];
 
+  //
   //Adiciona os itens da listCharacters a ul;
-  const handleAddListToPage = (limit) => {
+  const handleAddListToPage = async (limit) => {
     ul.innerHTML = '';
     if(listCharacters.length === 0) {
       errorMsg.innerHTML = 'Nenhum personagem cadastrado.';
@@ -67,7 +71,10 @@ window.onload = function() {
       li.setAttribute('class', 'listContent');
       
       const img = document.createElement('img');
-      img.setAttribute('src', listCharacters[i].image);
+      //console.log()
+      //const a = await fetch(listCharacters[0].image);
+      
+      //img.setAttribute('src', listCharacters[i].image);
       img.setAttribute('class', 'psychonautsImg');
       
       const p = document.createElement('p');
@@ -80,6 +87,7 @@ window.onload = function() {
     }
   }
 
+  //
   //Faz a requisição da lista de personagens e adiciona os itens a listCharacters
   const handleGetCharacters = () => {
     listCharacters = [];
@@ -104,17 +112,28 @@ window.onload = function() {
 
   //
   // Responsável pela realização do Cadastro de usuário
-  const handleRegistration = async (content) => {
-    axios.post('http://localhost:3000/registration', content)
-    .then((resp) => {
+  const handleRegistration = async () => {
+    if(inputPassword.value !== inputConfirmPassword.value) {
+      errorMsg.innerHTML = 'As senhas não são iguais. Tente novamente.';
+    }
+    else {
+      const content = {
+        userEmail: inputEmail.value,
+        userPassword: inputPassword.value,
+        userConfirmPassword: inputConfirmPassword.value
+      }
       errorMsg.innerHTML = '';
-      successfulMsg.innerHTML = resp.data.message;
-    })
-    .catch((error) => {
-      successfulMsg.innerHTML = '';
-      const {message} = error.response.data;
-      errorMsg.innerHTML = `Status: ${error.response.status}.<br>${message}`;
-    })
+      axios.post('http://localhost:3000/registration', content)
+      .then((resp) => {
+        errorMsg.innerHTML = '';
+        successfulMsg.innerHTML = resp.data.message;
+      })
+      .catch((error) => {
+        successfulMsg.innerHTML = '';
+        const {message} = error.response.data;
+        errorMsg.innerHTML = `Status: ${error.response.status}.<br>${message}`;
+      })
+    }
   }
 
   //
@@ -215,7 +234,11 @@ window.onload = function() {
 
   //
   // Responsável pela realização do Login do usuário
-  const handleLogin = (content) => {
+  const handleLogin = () => {
+    const content = {
+      userEmail: inputEmail.value,
+      userPassword: inputPassword.value
+    }
     axios.post('http://localhost:3000/login', content)
     .then((resp) => {
       storage.setItem('Token', resp.data.token);
@@ -230,10 +253,12 @@ window.onload = function() {
     });
   }
 
+  //
   //Usado para criar a pagina de cadastro e de login
   const createRegistrationAndLoginPage = (page) => {
     if(headerLinkLogin.innerHTML === 'Entrar') {
       mainContainer.innerHTML = '';
+      registrationAndLoginDiv. innerHTML = '';
       errorMsg.innerHTML = '';
       inputEmail.value = '';
       inputPassword.value = '';
@@ -253,12 +278,14 @@ window.onload = function() {
       inputEmail.setAttribute('type', 'email');
       inputEmail.setAttribute('placeholder', 'Insira o seu e-mail');
       inputEmail.setAttribute('autofocus', true);
-      inputEmail.setAttribute('required', '');
       inputPassword.setAttribute('id', 'userPassword');
       inputPassword.setAttribute('class', 'inputStyle');
       inputPassword.setAttribute('type', 'password');
       inputPassword.setAttribute('placeholder', 'Insira a sua senha');
-      inputPassword.setAttribute('required', '');
+      inputConfirmPassword.setAttribute('id', 'userConfirmPassword');
+      inputConfirmPassword.setAttribute('class', 'inputStyle');
+      inputConfirmPassword.setAttribute('type', 'password');
+      inputConfirmPassword.setAttribute('placeholder', 'Confirmar senha');
       btnRegistrationAndLogin.setAttribute('id', 'btnRegistrationAndLogin');
       btnRegistrationAndLogin.setAttribute('type', 'button');
       btnRegistrationAndLogin.setAttribute('class', 'btnRegistrationAndLoginStyle');
@@ -266,6 +293,9 @@ window.onload = function() {
       registrationAndLoginDiv.setAttribute('id', 'registrationAndLoginDiv');
       registrationAndLoginDiv.appendChild(inputEmail);
       registrationAndLoginDiv.appendChild(inputPassword);
+
+      page === 'Registration' && registrationAndLoginDiv.appendChild(inputConfirmPassword);
+      
       registrationAndLoginDiv.appendChild(btnRegistrationAndLogin);
 
       registrationAndLoginLinkContainer.setAttribute('class', 'registrationAndLoginLinkContainer');
@@ -301,6 +331,7 @@ window.onload = function() {
     }
   }
 
+  //
   //Evento ao clicar no btn cadastrar ou Entrar
   btnRegistrationAndLogin.addEventListener('click', () => {
     errorMsg.innerHTML = '';
@@ -316,12 +347,7 @@ window.onload = function() {
     }
     else {
       const btnValue = btnRegistrationAndLogin.value;
-      const content = {
-        userEmail: email,
-        userPassword: password
-      }
-
-      btnValue === 'Cadastrar' ? handleRegistration(content) : handleLogin(content);
+      btnValue === 'Cadastrar' ? handleRegistration() : handleLogin();
     }
   })
 
@@ -372,6 +398,7 @@ window.onload = function() {
     }
   })
 
+  //
   //Altera a quantidade de itens exibidos na página
   inputRange.addEventListener('change', () => {
     inputRangeValue.innerHTML = inputRange.value;
@@ -379,9 +406,10 @@ window.onload = function() {
     handleAddListToPage(inputRange.value);
   })
 
-  
+  //
+  //Ao fazer uma busca e limpar o campo de busca a lista é recarregada
   inputSearch.addEventListener('change', () => {
-    if(inputSearch.value === '') {//Ao fazer uma busca e limpar o campo de busca a lista é recarregada
+    if(inputSearch.value === '') {
       handleAddListToPage(inputRange.value);
     }
   })
@@ -406,8 +434,10 @@ window.onload = function() {
 
   headerContainerLogin.addEventListener('click', () => createRegistrationAndLoginPage('Login'));
   
+  //
+  //Ao clicar no logo Evernote é feito reload na página
   logo.addEventListener('click', () => {
-    document.location.reload();//Ao clicar no logo Evernote é feito reload na página
+    document.location.reload();
   })
 
   section2BtnRegister.addEventListener('click', () => createRegistrationAndLoginPage('Registration'));
@@ -442,16 +472,30 @@ window.onload = function() {
 
   //
   // Lidar com a cadastro de personagens ao cliclar no botão cadastrar
-  psychonautsInputButton.addEventListener('click', () => {
+  psychonautsInputButton.addEventListener('click', async () => {
     psychonautsInputContentMsg.innerHTML = '';
     const psychoName = document.querySelector('#psychonautsInputName').value
+    const psychoImage = await document.querySelector('#psychonautsInputImage').files[0];
     
-    const content = {
-      psychoName,
-      psychoImage: 'teste'
-    }
+    let blob1 = new Blob([new Uint8Array(psychoImage)],{type:'image/png'})
+
+    console.log(blob1)
+
+    var file = new File([blob1], "name");
+    const url = URL.createObjectURL(file);
+    psychoImage.src = url
+    console.log(url);
+
+    /* const formData = new FormData();
     
-    axios.post('http://localhost:3000/auth/insert/characters', content)
+    formData.append("file", psychoImage);
+    formData.append("psychoName", psychoName);
+    
+    axios.post('http://localhost:3000/auth/insert/characters', formData, {
+      headers: {
+      "Content-Type": `multipart/form-data` 
+      }
+    })
     .then((resp) => {
       psychonautsInputContentMsg.innerHTML = '';
       document.location.reload();
@@ -459,7 +503,7 @@ window.onload = function() {
     .catch((error) => {
       const {message} = error.response.data;
       psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
-    })
+    }) */
   })
 
   //
