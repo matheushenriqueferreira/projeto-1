@@ -1,10 +1,12 @@
 import { MongoClient } from "mongodb";
 
+const url = 'mongodb://127.0.0.1/projeto';
+
 export class Psychonauts {
 
   static async insert(content) {
-    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
-    const db = conn.db();
+    const conn = await MongoClient.connect(url);
+    const db = conn.db(); 
 
     const result = {
       status: 201,
@@ -13,7 +15,7 @@ export class Psychonauts {
 
     const register = await db.collection('psychonauts').insertOne({ 
       name: content.psychoName,
-      image: content.psychoImage
+      image: content.base64File
     });
 
     conn.close();
@@ -22,7 +24,7 @@ export class Psychonauts {
   }
 
   static async findOne(psychoName) {
-    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
+    const conn = await MongoClient.connect(url);
     const db = conn.db();
     const psychonautsExists = await db.collection('psychonauts').findOne({ name: psychoName })
 
@@ -37,7 +39,7 @@ export class Psychonauts {
   }
 
   static async find() {
-    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
+    const conn = await MongoClient.connect(url);
     const db = conn.db();
     const psychonautsExists = await db.collection('psychonauts').find().toArray();
 

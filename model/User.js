@@ -1,9 +1,11 @@
 import { MongoClient } from "mongodb";
 
+const url = 'mongodb://127.0.0.1/projeto';
+
 export class User {
 
   static async insert(content) {
-    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
+    const conn = await MongoClient.connect(url);
     const db = conn.db();
 
     const result = {
@@ -22,7 +24,7 @@ export class User {
   }
 
   static async findOne(userEmail) {
-    const conn = await MongoClient.connect('mongodb://127.0.0.1/projeto');
+    const conn = await MongoClient.connect(url);
     const db = conn.db();
     const userExists = await db.collection('user').findOne({ email: userEmail })
 
