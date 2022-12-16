@@ -2,7 +2,6 @@ import express from "express";
 import { UserController } from "./controller/UserController.js";
 import { PsychonautsController } from "./controller/PsychonautsController.js";
 import multer from "multer";
-
 const app = express();
 
 app.use(express.static('./public'));
@@ -14,7 +13,7 @@ app.use(express.urlencoded({extended: false}));
 app.post('/registration', (req, res) => UserController.registration(req, res));
 
 //
-// Login de usuário com criação de Token
+// Login de usuário e criação de Token no UserController.login
 app.post('/login', (req, res) =>  UserController.login(req, res));
 
 //

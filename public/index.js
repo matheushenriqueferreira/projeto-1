@@ -73,7 +73,7 @@ window.onload = function() {
       const img = document.createElement('img');
 
       
-      console.log(listCharacters[i].image)
+      //console.log(listCharacters[i].image)
       //img.setAttribute('src', 'data:image/png;base64' + listCharacters[i].image);
       img.setAttribute('class', 'psychonautsImg');
       
@@ -139,7 +139,7 @@ window.onload = function() {
   //
   // Página que o usuário acessa depois de logado
   const createHomePage = () => {
-    if(storage.getItem('Token')){//Verifica se o toke existe
+    if(sessionStorage.getItem('Token')){//Verifica se o cookie de sessão existe
       mainContainer.innerHTML = '';
       headerLinkLogin.innerHTML = 'Sair'
       headerContainerLogin.innerHTML = 'Sair'
@@ -234,15 +234,16 @@ window.onload = function() {
 
   //
   // Responsável pela realização do Login do usuário
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const content = {
       userEmail: inputEmail.value,
       userPassword: inputPassword.value
     }
     axios.post('http://localhost:3000/login', content)
     .then((resp) => {
-      storage.setItem('Token', resp.data.token);
+      storage.setItem('Token', resp.data.token);// Pega o Token e salva na session Storage 
       errorMsg.innerHTML = '';
+      
       successfulMsg.innerHTML = resp.data.message;
       createHomePage();
     })
@@ -494,7 +495,13 @@ window.onload = function() {
     })
     .catch((error) => {
       const {message} = error.response.data;
-      psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
+      if(error.response.status === 401 && message === 'jwt expired') { // Se o token expirar, remove o token da session storage
+        storage.removeItem('Token');
+        psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>Token expirou!<br>Atualize a página e faça login novamente`;
+      }
+      else {
+        psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
+      }
     })
   })
 

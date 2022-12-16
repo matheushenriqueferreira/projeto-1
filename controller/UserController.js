@@ -66,7 +66,7 @@ export class UserController {
         // Criar Token 
         const token = jsonwebtoken.sign({}, "6c69fa35-5fac-42dd-a707-e5bed6642077", {
           subject: `${user._id}`,
-          expiresIn: "60s"
+          expiresIn: "60s" // Token expira em 60 segundos para testes
         });
         return res.status(200).json({message: 'Usuário autenticado', token});
       }
