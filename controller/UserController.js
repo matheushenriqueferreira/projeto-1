@@ -1,4 +1,5 @@
 import { User } from "../model/User.js";
+import jsonwebtoken from 'jsonwebtoken';
 
 export class UserController {
   static async registration(req, res) {
@@ -23,7 +24,6 @@ export class UserController {
     try {
       // Verifica se já existe e-mail cadastrado
       const userExists = await User.findOne(userEmail);
-      
       if(userExists) {
         return res.status(422).json({message: 'Já existe um usuário cadastrado com este e-mail!'});
       }
@@ -49,11 +49,10 @@ export class UserController {
     if(!userPassword) {
       return res.status(422).json({message: "Insira uma senha"});
     }
-
+    
     try {
       // Verifica se já existe e-mail cadastrado
       const user = await User.findOne(userEmail);
-      
       if(!user) {
         return res.status(404).json({message: 'Não foi encontrado cadastro vinculado a este e-mail'});
       }
@@ -63,7 +62,12 @@ export class UserController {
         return res.status(422).json({message: 'Senha inválida'});
       }
       else {
-        res.status(200).json({message: 'Usuário autenticado'});
+        // Criar Token 
+        const token = jsonwebtoken.sign({}, "6c69fa35-5fac-42dd-a707-e5bed6642077", {
+          subject: `${user._id}`,
+          expiresIn: "60s"
+        });
+        return res.status(200).json({message: 'Usuário autenticado', token});
       }
     }
     catch(error) {

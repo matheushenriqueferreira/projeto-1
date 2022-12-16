@@ -13,12 +13,12 @@ app.use(express.urlencoded({extended: false}));
 app.post('/registration', (req, res) => UserController.registration(req, res));
 
 //
-// Login de usuário
-app.post('/login', (req, res) => UserController.login(req, res));
+// Login de usuário com criação de Token
+app.post('/login', (req, res) =>  UserController.login(req, res));
 
 //
 // Inserção de personagens
-app.post('/auth/insert/characters', (req, res) => PsychonautsController.insert(req, res) );
+app.post('/auth/insert/characters', (req, res) => PsychonautsController.insert(req, res));
 
 //
 // Recuperar dados dos personagens
@@ -28,12 +28,11 @@ app.get('/characters', (req, res) => PsychonautsController.getAllPsychonauts(req
 // Recuperar dados dos personagens por nome
 app.get('/characters/:name', (req, res) => PsychonautsController.getPsychonautsByName(req, res));
 
-
 app.use((req, res) => {
   res.status(404).json({ 
     message: 'Conteúdo não encontrado',
     path: req.path
   });
-})
+});
 
 app.listen(3000);
