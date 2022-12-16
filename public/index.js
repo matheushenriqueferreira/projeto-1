@@ -54,7 +54,7 @@ window.onload = function() {
 
   const section2BtnRegister = document.querySelector('#section2BtnRegister');
 
-  const storage = localStorage;
+  const storage = sessionStorage;
 
   let listCharacters = [];
 
@@ -71,10 +71,10 @@ window.onload = function() {
       li.setAttribute('class', 'listContent');
       
       const img = document.createElement('img');
-      //console.log()
-      //const a = await fetch(listCharacters[0].image);
+
       
-      //img.setAttribute('src', listCharacters[i].image);
+      console.log(listCharacters[i].image)
+      //img.setAttribute('src', 'data:image/png;base64' + listCharacters[i].image);
       img.setAttribute('class', 'psychonautsImg');
       
       const p = document.createElement('p');
@@ -476,24 +476,16 @@ window.onload = function() {
     psychonautsInputContentMsg.innerHTML = '';
     const psychoName = document.querySelector('#psychonautsInputName').value
     const psychoImage = await document.querySelector('#psychonautsInputImage').files[0];
-    
-    let blob1 = new Blob([new Uint8Array(psychoImage)],{type:'image/png'})
 
-    console.log(blob1)
-
-    var file = new File([blob1], "name");
-    const url = URL.createObjectURL(file);
-    psychoImage.src = url
-    console.log(url);
-
-    /* const formData = new FormData();
+    const formData = new FormData();
     
     formData.append("file", psychoImage);
     formData.append("psychoName", psychoName);
     
     axios.post('http://localhost:3000/auth/insert/characters', formData, {
       headers: {
-      "Content-Type": `multipart/form-data` 
+      "Content-Type": `multipart/form-data`,
+      'Authorization': `Bearer ${storage.getItem('Token')}`
       }
     })
     .then((resp) => {
@@ -503,7 +495,7 @@ window.onload = function() {
     .catch((error) => {
       const {message} = error.response.data;
       psychonautsInputContentMsg.innerHTML = `Status: ${error.response.status}<br>${message}`;
-    }) */
+    })
   })
 
   //

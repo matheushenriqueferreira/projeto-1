@@ -15,7 +15,7 @@ export class Psychonauts {
 
     const register = await db.collection('psychonauts').insertOne({ 
       name: content.psychoName,
-      image: content.base64File
+      image: content.psychoImage
     });
 
     conn.close();

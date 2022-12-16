@@ -1,5 +1,6 @@
 import { User } from "../model/User.js";
 import jsonwebtoken from 'jsonwebtoken';
+import { expressjwt } from "express-jwt";
 
 export class UserController {
   static async registration(req, res) {
@@ -73,5 +74,14 @@ export class UserController {
     catch(error) {
       return res.status(500).json({message: 'Aconteceu um erro no servidor'});
     }
+  }
+
+  //
+  // Faz a verifição do Token e trata possiveis erros na resposta da requisição
+  static ensureAuthentication() {
+    return [
+      expressjwt( {secret: '6c69fa35-5fac-42dd-a707-e5bed6642077', algorithms: ["HS256"]}),
+      (err, req, res, next) => { res.status(err.status).json({ message: err.message }); }
+    ]
   }
 }

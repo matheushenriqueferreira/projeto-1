@@ -1,6 +1,7 @@
 import express from "express";
 import { UserController } from "./controller/UserController.js";
 import { PsychonautsController } from "./controller/PsychonautsController.js";
+import multer from "multer";
 
 const app = express();
 
@@ -17,10 +18,14 @@ app.post('/registration', (req, res) => UserController.registration(req, res));
 app.post('/login', (req, res) =>  UserController.login(req, res));
 
 //
-// Inserção de personagens
-app.post('/auth/insert/characters', (req, res) => PsychonautsController.insert(req, res));
+// Inserção de personagens com Middleware de verificação de autenticação
+app.post('/auth/insert/characters', 
+  multer({ storage: multer.memoryStorage() }).single('file'), 
+  UserController.ensureAuthentication(),  
+  (req, res) => PsychonautsController.insert(req, res)
+);
 
-//
+//(req, res, next) => UserController.ensureAuthentication(req, res, next)
 // Recuperar dados dos personagens
 app.get('/characters', (req, res) => PsychonautsController.getAllPsychonauts(req, res));
 
