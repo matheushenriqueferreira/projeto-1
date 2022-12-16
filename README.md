@@ -6,8 +6,8 @@
 
 ## :white_check_mark: Etapas do Projeto
 
-- [x] PROJETO 1 - HTML e CSS: Selecionar um website disponível na Web e replicar uma parte do seu layout de forma responsiva utilizando HTML e CSS.
-- [x] PROJETO 2 - JavaScript e AJAX: Selecionar e utilizar uma API JSON aberta, implementar as funcionalidades de login, busca de conteúdo e armazenamento de informações de login. Obs: Para testes, ao realizar Login, verificar e-mails válidos da API Reqres.in e preencher o campo password com mais de 3 caracteres.
+- [x] PROJETO 1 - HTML e CSS: Selecionar um website disponível na Web e replicar uma parte do seu layout de forma responsiva utilizando HTML e CSS. :arrow_right: Arquivos do Projeto 1: [Commit 15e6b816dc.](https://github.com/matheushenriqueferreira/projeto-web/tree/15e6b816dc33d0244bf8e9e7127041f8679a9ac8)
+- [x] PROJETO 2 - JavaScript e AJAX: Selecionar e utilizar uma API JSON aberta, implementar as funcionalidades de login, busca de conteúdo e armazenamento de informações de login. Obs: Para testes, ao realizar Login, verificar e-mails válidos da API Reqres.in e preencher o campo password com mais de 3 caracteres. :arrow_right: Arquivos do Projeto 2: [Commit 384e18960a.](https://github.com/matheushenriqueferreira/projeto-web/tree/384e18960a75862d03e6a9b48329272935bc8dbc)
 - [ ] PROJETO 3 - Express.js: Implementar todas as rotinas de consulta e login no lado servidor, substituindo as implementações das APIs abertas utilizadas no PROJETO 2. utilizar middleware express-jwt/cookie-session/session e multer.
 
 ## Tabela de Conteúdo
