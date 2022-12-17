@@ -1,6 +1,8 @@
 window.onload = function() {
   const mainContainer = document.querySelector(".mainContainer");
   
+  const url = 'http://localhost:3000';
+  
   const registrationAndLoginSection = document.createElement("section");
   const registrationAndLoginSectionContent = document.createElement("div");
   const logo2= document.createElement("img");
@@ -13,6 +15,7 @@ window.onload = function() {
   const registrationAndLoginLinkContainer = document.createElement("div");
   const registrationAndLoginLinkText = document.createElement("p");
   const registrationAndLoginLink = document.createElement("a");
+
   
   const headerLinkLogin = document.querySelector("#headerLinkLogin");
   const section2LinkLogin = document.querySelector("#section2LinkLogin");
@@ -88,7 +91,7 @@ window.onload = function() {
   //Faz a requisição da lista de personagens e adiciona os itens a listCharacters
   const handleGetCharacters = () => {
     listCharacters = [];
-    axios.get(`http://localhost:3000/characters`)
+    axios.get(`${url}/characters`)
     .then((resp) => {
       resp.data.charactersExists.forEach(element => {
         listCharacters.push(element);
@@ -120,7 +123,7 @@ window.onload = function() {
         userConfirmPassword: inputConfirmPassword.value
       }
       errorMsg.innerHTML = '';
-      axios.post('http://localhost:3000/registration', content)
+      axios.post(`${url}/registration`, content)
       .then((resp) => {
         errorMsg.innerHTML = '';
         successfulMsg.innerHTML = resp.data.message;
@@ -236,7 +239,7 @@ window.onload = function() {
       userEmail: inputEmail.value,
       userPassword: inputPassword.value
     }
-    axios.post('http://localhost:3000/login', content)
+    axios.post(`${url}/login`, content)
     .then((resp) => {
       storage.setItem('Token', resp.data.token);// Pega o Token e salva na session Storage 
       errorMsg.innerHTML = '';
@@ -357,7 +360,7 @@ window.onload = function() {
     searchError.setAttribute('id', 'searchError');
     
     if(inputSearch.value !== '') {
-      axios.get(`http://localhost:3000/characters/${inputSearch.value}`, {search: inputSearch.value})
+      axios.get(`${url}/characters/${inputSearch.value}`, {search: inputSearch.value})
       .then((resp) => {
         if(resp.data.character) {
           psychonautsContainer.innerHTML = '';
@@ -479,7 +482,7 @@ window.onload = function() {
     formData.append("file", psychoImage);
     formData.append("psychoName", psychoName);
     
-    axios.post('http://localhost:3000/auth/insert/characters', formData, {
+    axios.post(`${url}/auth/insert/characters`, formData, {
       headers: {
       "Content-Type": `multipart/form-data`,
       'Authorization': `Bearer ${storage.getItem('Token')}`
