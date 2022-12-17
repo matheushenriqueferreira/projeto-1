@@ -2,11 +2,21 @@ import express from "express";
 import { UserController } from "./controller/UserController.js";
 import { PsychonautsController } from "./controller/PsychonautsController.js";
 import multer from "multer";
+import fs from 'fs'
 const app = express();
 
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use('/uploads', express.static('uploads'));
+
+const dir = "./uploads";
+
+//
+// Usado para criar o diretório /uploads no projeto, caso não exista
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
 
 //
 // Cadastro de usuário
@@ -17,9 +27,20 @@ app.post('/registration', (req, res) => UserController.registration(req, res));
 app.post('/login', (req, res) =>  UserController.login(req, res));
 
 //
+// Configuração do multer, referência https://expressjs.com/en/resources/middleware/multer.html
+const storageConfig = multer.diskStorage( { 
+    destination: (req, file, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+});
+
+//
 // Inserção de personagens com Middleware de verificação de autenticação
 app.post('/auth/insert/characters', 
-  multer({ storage: multer.memoryStorage() }).single('file'), 
+  multer({ storage: storageConfig }).single('file'), 
   UserController.ensureAuthentication(),  
   (req, res) => PsychonautsController.insert(req, res)
 );

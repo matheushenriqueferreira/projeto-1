@@ -1,15 +1,25 @@
 import { Psychonauts } from '../model/Psychonauts.js'
+import { expressjwt } from 'express-jwt';
+import fs from 'fs';
 
 export class PsychonautsController {
   static async insert(req, res) {
-    const {psychoName , psychoImage} = req.body;
+    const { psychoName } = req.body;
 
     if(!psychoName) {
       return res.status(422).json({message: "Insira o nome do personagem"});
     }
     
-    if(!psychoImage) {
+    if(!req.file) {
       return res.status(422).json({message: "Insira a imagem do personagem"});
+    }
+
+    const psychoImage = {
+      name: req.file.filename,
+      img: {
+        data: Buffer.from(fs.readFileSync('uploads/' + req.file.filename)),
+        contentType: req.file.mimetype
+      }
     }
 
     try { 
@@ -28,7 +38,7 @@ export class PsychonautsController {
       }
     }
     catch(error) {
-      return res.status(500).json({message: 'Aconteceu uma erro no servidor'});
+      return res.status(500).json({message: 'Aconteceu um erro no servidor'});
     }
   }
 

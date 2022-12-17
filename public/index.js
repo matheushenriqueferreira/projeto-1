@@ -60,7 +60,7 @@ window.onload = function() {
 
   //
   //Adiciona os itens da listCharacters a ul;
-  const handleAddListToPage = async (limit) => {
+  const handleAddListToPage = (limit) => {
     ul.innerHTML = '';
     if(listCharacters.length === 0) {
       errorMsg.innerHTML = 'Nenhum personagem cadastrado.';
@@ -71,10 +71,7 @@ window.onload = function() {
       li.setAttribute('class', 'listContent');
       
       const img = document.createElement('img');
-
-      
-      //console.log(listCharacters[i].image)
-      //img.setAttribute('src', 'data:image/png;base64' + listCharacters[i].image);
+      img.setAttribute('src', `/uploads/${listCharacters[i].image.name}`);
       img.setAttribute('class', 'psychonautsImg');
       
       const p = document.createElement('p');
@@ -362,14 +359,13 @@ window.onload = function() {
     if(inputSearch.value !== '') {
       axios.get(`http://localhost:3000/characters/${inputSearch.value}`, {search: inputSearch.value})
       .then((resp) => {
-        console.log(resp.data.character)
         if(resp.data.character) {
           psychonautsContainer.innerHTML = '';
           ul.innerHTML = '';
           const li = document.createElement('li');
           li.setAttribute('class', 'listContent');
           const img = document.createElement('img');
-          img.setAttribute('src', resp.data.character.img);
+          img.setAttribute('src', `/uploads/${resp.data.character.image.name}`);
           img.setAttribute('class', 'psychonautsImg');
           const p = document.createElement('p');
           p.setAttribute('class', 'psychonautsName');
