@@ -27,9 +27,9 @@ Acesse o código fonte em: [GitHub-projeto-web](https://github.com/matheushenriq
 ## :hash: Tecnologias utilizadas
 
 - [Evernote](https://evernote.com/intl/pt-br) - Website escolhido.
-- [Reqres.in](https://reqres.in/) - API para validação de Login(Projeto - 2).
-- [Psychonauts API](https://psychonauts-api.netlify.app/) - API para consumo de dados(Projeto - 2).
-- [ExpressJS](https://expressjs.com/pt-br/) - Framework(Projeto - 3).
-- [Json-Web-Token](https://www.npmjs.com/package/jsonwebtoken) - Usado para criação do Token no login(Projeto - 3).
-- [Express-JWT](https://www.npmjs.com/package/express-jwt) - Middleware Express para validação de JWT's(Projeto - 3).
-- [MongoDB](https://www.mongodb.com/) - Banco de dados(Projeto - 3).
+- [Reqres.in](https://reqres.in/) - API para validação de Login(Projeto 2).
+- [Psychonauts API](https://psychonauts-api.netlify.app/) - API para consumo de dados(Projeto 2).
+- [ExpressJS](https://expressjs.com/pt-br/) - Framework(Projeto 3).
+- [Json-Web-Token](https://www.npmjs.com/package/jsonwebtoken) - Usado para criação do Token no login(Projeto 3).
+- [Express-JWT](https://www.npmjs.com/package/express-jwt) - Middleware Express para validação de JWT's(Projeto 3).
+- [MongoDB](https://www.mongodb.com/) - Banco de dados(Projeto 3).
